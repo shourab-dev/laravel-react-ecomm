@@ -10,7 +10,7 @@ const TopHeader = () => {
                     <span className="me-2 text-xl ">
                         <CiLocationOn />
                     </span>
-                    Store Location: Lincoln- 344, Illinois, Chicago, USA
+                    Store Location: Lincoln- 344, Illinois, Chicago, USA 
                 </div>
                 <div className="md:text-end text-center">
                     <form action="">
