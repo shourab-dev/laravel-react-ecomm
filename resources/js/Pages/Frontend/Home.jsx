@@ -4,11 +4,10 @@ import React from "react";
 
 const Home = () => {
     return (
-        <Frontend>
-            <Head title="Head" />
-            <div><h1>Home</h1></div>
-        </Frontend>
+        <div>
+            <h1>Home</h1>
+        </div>
     );
 };
-
+Home.layout = (page) => <Frontend children={page} pageTitle="Home" />;
 export default Home;

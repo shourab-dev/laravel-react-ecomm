@@ -57,7 +57,7 @@ const OffCanvas = ({
                                 <IoCloseOutline data-name="sidebarCloseBtn" />
                             </button>
                         </div>
-                        <div className="p-3">{children}</div>
+                        <div className="p-3 overflow-y-auto" style={{ height: `calc(100vh - 58px)` }}>{children}</div>
                     </div>
                 </Transition>
             </div>

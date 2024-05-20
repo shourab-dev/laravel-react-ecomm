@@ -1,72 +1,34 @@
 import React, { useState } from "react";
-import { RiMenu3Line } from "react-icons/ri";
-import { MdKeyboardArrowDown } from "react-icons/md";
+import { menus } from "@/utils/NavBarLinks";
+import MenuDropDown from "./MenuDropDown";
 import { Link } from "@inertiajs/react";
+import { MdOutlinePhoneInTalk } from "react-icons/md";
 
-const BottomHeader = () => {
-
-    const [dropDown, setDropDown] = useState(false)
-
-
+const BottomHeader = ({categories}) => {
     return (
         <div className="bg-gray-100 hidden md:block">
-            <div className="container grid grid-cols-12">
-                <div className="col-span-3 relative">
-                    <button className="flex bg-primary text-white justify-between items-center p-3 w-[100%]">
-                        <RiMenu3Line />
-                        <span className="mx-3">All Categories</span>
-                        <MdKeyboardArrowDown />
-                    </button>
-                    <div className="absolute top-full bg-white shadow-md w-full py-2 px-3">
-                        <Link href="#" className="py-2 border-b flex  ">
-                            <img
-                                src="https://cdn-icons-png.flaticon.com/512/3205/3205424.png"
-                                alt=""
-                                className="w-5 me-2"
-                            />
-                            Fashion
+            <div className="container grid grid-cols-12 items-center">
+                <div className="col-span-2 relative">
+                    <MenuDropDown links={categories} />
+                </div>
+                <div className="col-span-8 px-10 text-center">
+                    {menus.map((menu, index) => (
+                        <Link
+                        key={menu.id}
+                            className={`hover:text-primary text-gray-500 font-bold me-[32px] ${
+                                route().current(menu.url) ? "text-primary" : ""
+                            }`}
+                            href={route(menu.url)}
+                        >
+                            {menu.title}
                         </Link>
-                        <Link href="#" className="py-2 border-b flex  ">
-                            <img
-                                src="https://cdn-icons-png.flaticon.com/512/3205/3205424.png"
-                                alt=""
-                                className="w-5 me-2"
-                            />
-                            Fashion
-                        </Link>
-                        <Link href="#" className="py-2 border-b flex  ">
-                            <img
-                                src="https://cdn-icons-png.flaticon.com/512/3205/3205424.png"
-                                alt=""
-                                className="w-5 me-2"
-                            />
-                            Fashion
-                        </Link>
-                        <Link href="#" className="py-2 border-b flex  ">
-                            <img
-                                src="https://cdn-icons-png.flaticon.com/512/3205/3205424.png"
-                                alt=""
-                                className="w-5 me-2"
-                            />
-                            Fashion
-                        </Link>
-                        <Link href="#" className="py-2 border-b flex  ">
-                            <img
-                                src="https://cdn-icons-png.flaticon.com/512/3205/3205424.png"
-                                alt=""
-                                className="w-5 me-2"
-                            />
-                            Fashion
-                        </Link>
-                        <Link href="#" className="py-2 border-b flex  ">
-                            <img
-                                src="https://cdn-icons-png.flaticon.com/512/3205/3205424.png"
-                                alt=""
-                                className="w-5 me-2"
-                            />
-                            Fashion
-                        </Link>
-                    </div>
+                    ))}
+                </div>
+                <div className="col-span-2">
+                    <a href="tel:(219) 555-0114" className="flex items-center justify-end text-md ">
+                        <MdOutlinePhoneInTalk className="me-2 text-2xl" />
+                        (219) 555-0114
+                    </a>
                 </div>
             </div>
         </div>

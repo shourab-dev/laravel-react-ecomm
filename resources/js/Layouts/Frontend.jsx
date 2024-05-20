@@ -1,12 +1,15 @@
-import Navbar from '@/Components/Navbar'
-import React from 'react'
+import Navbar from "@/Components/Navbar";
+import React from "react";
+import { Head } from "@inertiajs/react";
+const Frontend = ({ children, pageTitle = 'Ecommerce' }) => {
+    return (
+        <>
+            <Head title={pageTitle} />
 
-const Frontend = ({children}) => {
-  return (
-    <>
-     <Navbar />
-    </>
-  )
-}
+            <Navbar />
+            {children}
+        </>
+    );
+};
 
-export default Frontend
+export default Frontend;
