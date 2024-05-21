@@ -11,17 +11,13 @@ import BottomHeader from "./BottomHeader";
 import SmallMenu from "./SmallMenu";
 import { menus } from "@/utils/NavBarLinks";
 import axios from "axios";
-const Navbar = () => {
+const Navbar = ({categories}) => {
     const [showCart, setShowCart] = useState(false);
     const [sidebar, setSidebar] = useState(false);
-    const [categories, setCategories] = useState(null);
+    
     const [products, setProducts] = useState(null);
 
-    useEffect(() => {
-        axios.get(route("categories.data.all")).then(({ data }) => {
-            setCategories(data);
-        });
-    }, []);
+   
 
     return (
         <>

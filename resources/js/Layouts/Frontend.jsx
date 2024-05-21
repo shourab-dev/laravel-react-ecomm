@@ -1,12 +1,21 @@
 import Navbar from "@/Components/Navbar";
 import React from "react";
 import { Head } from "@inertiajs/react";
-const Frontend = ({ children, pageTitle = 'Ecommerce' }) => {
+import { useEffect, useState } from "react";
+
+const Frontend = ({ children, pageTitle = "Ecommerce" }) => {
+    const [categories, setCategories] = useState(null);
+    useEffect(() => {
+        axios.get(route("categories.data.all")).then(({ data }) => {
+            setCategories(data);
+        });
+    }, []);
+
     return (
         <>
             <Head title={pageTitle} />
 
-            <Navbar />
+            <Navbar categories={categories} />
             {children}
         </>
     );

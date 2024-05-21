@@ -59,7 +59,9 @@ const SearchBar = () => {
     //* FORM SUBMIT
     const handleSearch = (e) => {
         e.preventDefault();
-
+        if(data.searchParam.length < 4){
+            return false;
+        }
         router.get(route("shop", {title:data.searchParam}));
     };
 

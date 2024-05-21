@@ -24,8 +24,7 @@ export default ({ banners = [{}, {}, {}] }) => {
             pagination={{ clickable: true, el: ".pagination" }}
             spaceBetween={0}
             slidesPerView={1}
-            onSlideChange={() => console.log("slide change")}
-            onSwiper={(swiper) => console.log(swiper)}
+            
             className="h-[640px]"
         >
             {banners?.map((banner, index) => (

@@ -8,7 +8,7 @@ import Frontend from "@/Layouts/Frontend";
 import { Head, Link } from "@inertiajs/react";
 import React from "react";
 
-const Home = () => {
+const Home = ({categories}) => {
     return (
         <>
             <section id="banner">
@@ -76,9 +76,8 @@ const Home = () => {
 
                     <FeaturedTitle title="Shop by Top Categories" url="#" />
 
-                    
-                        <CategorySlider />
-                    
+                    <CategorySlider />
+                    {categories}
                 </div>
             </section>
         </>
