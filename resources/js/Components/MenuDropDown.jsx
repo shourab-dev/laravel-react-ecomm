@@ -16,10 +16,10 @@ const MenuDropDown = ({ links = [] }) => {
                 <span className="mx-3">All Categories</span>
                 <MdKeyboardArrowDown />
             </button>
-
+        
             {links?.length > 0 && (
                 <div
-                    className={`absolute top-full bg-white shadow-md w-full py-2 px-3 transition-all ${
+                    className={`absolute top-full bg-white shadow-md w-full py-2 px-3 transition-all z-50 ${
                         !dropDown
                         ? "opacity-0 invisible mt-[20px]"
                         : "opacity-100 visible mt-[0px]"
@@ -27,13 +27,14 @@ const MenuDropDown = ({ links = [] }) => {
                 >
                     {links?.map((link) => (
                         <Link
+                        
                             key={link?.id}
-                            href={link?.url}
+                            href={route('category.archeive', link.slug)}
                             className="hover:ms-2 transition-all duration-500 py-2 border-b flex  "
                         >
-                            {link.img && (
+                            {link.icon && (
                                 <img
-                                    src={link?.img}
+                                    src={link?.icon}
                                     alt={link?.title}
                                     className="w-5 me-2"
                                 />

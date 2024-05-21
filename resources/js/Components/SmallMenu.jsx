@@ -15,7 +15,7 @@ const SmallMenu = ({ links = [], categories = [] }) => {
             {categories?.map((category) => (
                 <Link
                     key={category?.id}
-                    href={category.slug}
+                    href={route("category.archeive", category.slug)}
                     className="hover:ms-2 transition-all duration-500 py-2 border-b flex  "
                 >
                     {category?.title}

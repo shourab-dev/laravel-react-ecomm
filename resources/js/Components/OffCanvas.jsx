@@ -27,6 +27,7 @@ const OffCanvas = ({
             leave="transition-opacity duration-150"
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
+            className={`fixed h-screen z-50`}
         >
             <div
                 data-name="sidebar"
@@ -45,7 +46,8 @@ const OffCanvas = ({
                     leaveTo={`${
                         position == "start" ? "-" : ""
                     }translate-x-full`}
-                    className={`max-w-[${width}px] w-[90%]  h-full bg-white`}
+                    className={`w-[90%]  h-full bg-white`}
+                    style={{ maxWidth: `${width}px` }}
                 >
                     <div>
                         <div className="canvasHeader border-b py-2 px-4 flex justify-between items-center">
@@ -57,7 +59,12 @@ const OffCanvas = ({
                                 <IoCloseOutline data-name="sidebarCloseBtn" />
                             </button>
                         </div>
-                        <div className="p-3 overflow-y-auto" style={{ height: `calc(100vh - 58px)` }}>{children}</div>
+                        <div
+                            className="p-3 overflow-y-auto"
+                            style={{ height: `calc(100vh - 58px)` }}
+                        >
+                            {children}
+                        </div>
                     </div>
                 </Transition>
             </div>

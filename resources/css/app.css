@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,29 +7,49 @@
     .container {
         @apply w-5/6 mx-auto;
     }
+    .btn {
+        @apply bg-primary text-white py-[16px] px-[20px] text-sm md:text-base md:px-[40px] inline-block font-bold;
+    }
+    .arrows {
+        @apply absolute bg-white/90  md:bg-white hover:bg-primary hover:text-white transition-all duration-300 shadow-md w-[45px] h-[45px] flex place-items-center justify-center rounded-full cursor-pointer;
+    }
+    .arrows.swiper-button-disabled {
+        @apply opacity-40 cursor-not-allowed;
+    }
+    .pagination {
+        @apply absolute left-1/2 bottom-[20px] translate-x-[-50%] z-20  items-center justify-center hidden md:flex;
+    }
+    .pagination .swiper-pagination-bullet {
+        @apply w-2 h-2 rounded-full mx-2 bg-green-800/30 transition-all duration-500;
+    }
+    .pagination .swiper-pagination-bullet.swiper-pagination-bullet-active{
+      @apply bg-green-600 w-3 h-3;
+    }
 }
 
 @layer base {
-  h1 {
-    @apply text-2xl;
-  }
-  h2 {
-    @apply text-xl;
-  }
-  
-  h3 {
-    @apply text-lg;
-  }
-  
-  h4 {
-    @apply text-base;
-  }
-  
-  h5 {
-    @apply text-sm;
-  }
-  h6 {
-    @apply text-xs;
-  }
-  
+    h1 {
+        @apply text-2xl;
+    }
+    h2 {
+        @apply text-xl;
+    }
+
+    h3 {
+        @apply text-lg;
+    }
+
+    h4 {
+        @apply text-base;
+    }
+
+    h5 {
+        @apply text-sm;
+    }
+    h6 {
+        @apply text-xs;
+    }
+    svg{
+        @apply inline-block;
+    }
 }

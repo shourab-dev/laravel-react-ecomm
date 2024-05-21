@@ -15,10 +15,7 @@ const Navbar = () => {
     const [showCart, setShowCart] = useState(false);
     const [sidebar, setSidebar] = useState(false);
     const [categories, setCategories] = useState(null);
-    const [products, setProducts] = useState([
-        { id: 1, title: "Gold" },
-        { id: 1, title: "Gold" },
-    ]);
+    const [products, setProducts] = useState(null);
 
     useEffect(() => {
         axios.get(route("categories.data.all")).then(({ data }) => {
@@ -77,7 +74,7 @@ const Navbar = () => {
 
             <BottomHeader categories={categories} />
             <OffCanvas
-                width={400}
+                
                 title="My Cart"
                 position="end"
                 show={showCart}

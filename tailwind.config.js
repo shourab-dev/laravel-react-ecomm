@@ -14,10 +14,14 @@ export default {
         extend: {
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
+                popins: ["Poppins", "sans-serif"],
             },
             colors: {
                 primary: "#00B207",
             },
+            backgroundImage: (theme) => ({
+                "banner-pattern": "url('/frontend/images/bannerBg.png')",
+            }),
         },
     },
 

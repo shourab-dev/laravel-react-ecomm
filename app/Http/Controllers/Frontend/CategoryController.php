@@ -13,4 +13,10 @@ class CategoryController extends Controller
         $categories = Category::where('category_id', null)->get();
         return response()->json($categories);
     }
+
+
+    function archeivePage()
+    {
+        return inertia('Frontend/ArcheivePage');
+    }
 }

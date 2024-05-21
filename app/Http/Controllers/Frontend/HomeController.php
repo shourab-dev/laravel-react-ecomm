@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
@@ -11,10 +12,20 @@ class HomeController extends Controller
     {
         return inertia('Frontend/Home');
     }
-    function shopPage()
+    function shopPage(Request $request)
     {
 
-        return inertia('Frontend/Shop');
+        $query = Product::query();
+        if ($request->title) {
+            $query->where('title', 'LIKE', '%' . $request->title . '%');
+        }
+
+        $products = $query->get();
+
+        return inertia('Frontend/Shop', [
+            'query' => $request->query(),
+            'products' => $products
+        ]);
     }
 
     function aboutPage()

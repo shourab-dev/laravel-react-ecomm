@@ -6,7 +6,7 @@ import { MdOutlinePhoneInTalk } from "react-icons/md";
 
 const BottomHeader = ({categories}) => {
     return (
-        <div className="bg-gray-100 hidden md:block">
+        <div className="bg-white border-t border-b shadow hidden md:block">
             <div className="container grid grid-cols-12 items-center">
                 <div className="col-span-2 relative">
                     <MenuDropDown links={categories} />
