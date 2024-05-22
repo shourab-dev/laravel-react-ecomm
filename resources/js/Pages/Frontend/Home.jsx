@@ -1,14 +1,15 @@
 import Banner from "@/Components/Banners/Banner";
 import CategorySlider from "@/Components/CategorySlider";
-
+import CustomerCounters from "@/Components/CustomerCounters";
 import FeaturedTitle from "@/Components/FeaturedTitle";
 import IconBox from "@/Components/IconBox";
 import ProductCard from "@/Components/Products/ProductCard";
+import TrustSection from "@/Components/TrustSection";
 import Frontend from "@/Layouts/Frontend";
-import { Head, Link } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 import React from "react";
 
-const Home = ({categories}) => {
+const Home = ({ categories }) => {
     return (
         <>
             <section id="banner">
@@ -74,12 +75,24 @@ const Home = ({categories}) => {
                         className="rotate-[-100deg] absolute top-[-50px]"
                     />
 
-                    <FeaturedTitle title="Shop by Top Categories" url="#" />
+                    <FeaturedTitle
+                        title="Shop by Top Categories"
+                        url={route("shop")}
+                    />
 
                     <CategorySlider />
                     {categories}
                 </div>
             </section>
+
+
+        <TrustSection/>
+
+
+
+        <CustomerCounters/>
+
+
         </>
     );
 };

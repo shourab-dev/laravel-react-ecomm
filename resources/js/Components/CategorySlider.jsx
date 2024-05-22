@@ -5,10 +5,11 @@ import { LuArrowRight, LuArrowLeft } from "react-icons/lu";
 // Import Swiper styles
 import "swiper/css";
 import CategoryCard from "./CategoryCard";
+import { useSelector } from "react-redux";
 
-const CategorySlider = ({
-    categories = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-}) => {
+const CategorySlider = () => {
+    const categories = useSelector((state) => state.categories);
+    
     return (
         <>
             <Swiper
@@ -25,14 +26,13 @@ const CategorySlider = ({
                     600: {
                         slidesPerView: 3,
                     },
-                    950:{
-                        slidesPerView: 4
+                    950: {
+                        slidesPerView: 4,
                     },
-                    
-                    1200:{
-                        slidesPerView: 6
-                    }
 
+                    1200: {
+                        slidesPerView: 6,
+                    },
                 }}
                 navigation={{
                     enabled: true,
@@ -40,7 +40,7 @@ const CategorySlider = ({
                     prevEl: ".prevArrow",
                 }}
                 spaceBetween={16}
-                slidesPerView={6}
+                slidesPerView={categories?.length >= 6 ? 6 : 4}
             >
                 {categories?.map((category, index) => (
                     <SwiperSlide
@@ -49,7 +49,7 @@ const CategorySlider = ({
                     >
                         {({ isActive }) => (
                             <>
-                                <CategoryCard />
+                                <CategoryCard category={category} />
                             </>
                         )}
                     </SwiperSlide>

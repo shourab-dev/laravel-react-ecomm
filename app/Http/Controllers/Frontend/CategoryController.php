@@ -10,7 +10,7 @@ class CategoryController extends Controller
 {
     function getCategoriesData()
     {
-        $categories = Category::where('category_id', null)->get();
+        $categories = Category::withCount('products as productCount')->where('category_id', null)->get();
         return response()->json($categories);
     }
 

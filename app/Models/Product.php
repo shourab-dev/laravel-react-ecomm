@@ -18,4 +18,9 @@ class Product extends Model
         "sku",
         "cross_sell",
     ];
+
+    function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
 }

@@ -11,13 +11,16 @@ import BottomHeader from "./BottomHeader";
 import SmallMenu from "./SmallMenu";
 import { menus } from "@/utils/NavBarLinks";
 import axios from "axios";
-const Navbar = ({categories}) => {
+import { useSelector } from "react-redux";
+
+const Navbar = () => {
     const [showCart, setShowCart] = useState(false);
     const [sidebar, setSidebar] = useState(false);
     
     const [products, setProducts] = useState(null);
-
-   
+    
+    const categories = useSelector(state=>state.categories)
+    
 
     return (
         <>
@@ -70,7 +73,6 @@ const Navbar = ({categories}) => {
 
             <BottomHeader categories={categories} />
             <OffCanvas
-                
                 title="My Cart"
                 position="end"
                 show={showCart}
