@@ -4,6 +4,8 @@ import CustomerCounters from "@/Components/CustomerCounters";
 import FeaturedTitle from "@/Components/FeaturedTitle";
 import IconBox from "@/Components/IconBox";
 import ProductCard from "@/Components/Products/ProductCard";
+import ProductLists from "@/Components/Products/ProductLists";
+import TestimonialSection from "@/Components/Testimonial/TestimonialSection";
 import TrustSection from "@/Components/TrustSection";
 import Frontend from "@/Layouts/Frontend";
 import { Link } from "@inertiajs/react";
@@ -55,12 +57,7 @@ const Home = ({ categories }) => {
                         url={route("shop", { featured: true })}
                     />
 
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                    </div>
+                    <ProductLists products={[{}, {}, {}, {}]} />
                 </div>
             </section>
 
@@ -85,13 +82,26 @@ const Home = ({ categories }) => {
                 </div>
             </section>
 
+            <TrustSection />
 
-        <TrustSection/>
+            <CustomerCounters />
+
+            <section
+                id="bestSellingProducts"
+                className="my-[40px] md:my-[80px]"
+            >
+                <div className="container">
+                    <FeaturedTitle
+                        title="Best Selling Products"
+                        url={route("shop", { best_sell: true })}
+                    />
+
+                    <ProductLists products={[{}, {}, {}, {}]} />
+                </div>
+            </section>
 
 
-
-        <CustomerCounters/>
-
+        <TestimonialSection/>
 
         </>
     );
