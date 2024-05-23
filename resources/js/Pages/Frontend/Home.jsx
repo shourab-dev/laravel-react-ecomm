@@ -1,4 +1,5 @@
 import Banner from "@/Components/Banners/Banner";
+import BrandSlider from "@/Components/Brand/BrandSlider";
 import CategorySlider from "@/Components/CategorySlider";
 import CustomerCounters from "@/Components/CustomerCounters";
 import FeaturedTitle from "@/Components/FeaturedTitle";
@@ -14,9 +15,11 @@ import React from "react";
 const Home = ({ categories }) => {
     return (
         <>
+            {/* * BANNER SECTION */}
             <section id="banner">
                 <Banner />
             </section>
+            {/* *FEATURES SECTION */}
             <section id="features">
                 <div className="container grid sm:grid-cols-2 md:grid-cols-4 border-b">
                     <IconBox
@@ -49,7 +52,7 @@ const Home = ({ categories }) => {
                     />
                 </div>
             </section>
-
+            {/* FEATURED PRODUCT */}
             <section id="featuredProducts" className="my-[40px] md:my-[80px]">
                 <div className="container">
                     <FeaturedTitle
@@ -60,7 +63,7 @@ const Home = ({ categories }) => {
                     <ProductLists products={[{}, {}, {}, {}]} />
                 </div>
             </section>
-
+            {/* FEATURED CATEGORY */}
             <section
                 id="featuredCategories"
                 className=" bg-gradient-to-b from-gray-400/10 to-blue-200/20"
@@ -81,11 +84,11 @@ const Home = ({ categories }) => {
                     {categories}
                 </div>
             </section>
-
+            {/* TRUST SECTION */}
             <TrustSection />
-
+            {/* CUSTOMER COUNTER */}
             <CustomerCounters />
-
+            {/* BEST SELLING PRODUCTS */}
             <section
                 id="bestSellingProducts"
                 className="my-[40px] md:my-[80px]"
@@ -99,10 +102,11 @@ const Home = ({ categories }) => {
                     <ProductLists products={[{}, {}, {}, {}]} />
                 </div>
             </section>
-
-
-        <TestimonialSection/>
-
+            {/* TESTIMONIAL SECTION */}
+            <TestimonialSection />
+            {/* BRAND SECTION */}
+            <BrandSlider />
+            
         </>
     );
 };

@@ -22,6 +22,7 @@ export default {
             backgroundImage: (theme) => ({
                 "banner-pattern": "url('/frontend/images/bannerBg.png')",
                 "trust-pattern": "url('/frontend/images/TrustImage.png')",
+                "footer-pattern": "url('/frontend/images/footerBg.png')",
                 "customer-pattern":
                     "url('/frontend/images/happyCustomerCounterBg.png')",
             }),

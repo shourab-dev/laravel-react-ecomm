@@ -5,7 +5,7 @@ const TestimonialCard = ({review}) => {
     return (
         <div className="bg-white shadow-lg p-[24px] rounded-lg">
             <FaQuoteRight className="text-green-500 text-4xl opacity-35" />
-            <p className="my-4 text-lg">
+            <p className="my-4 text-lg ">
                 Pellentesque eu nibh eget mauris congue mattis mattis nec
                 tellus. Phasellus imperdiet elit eu magna dictum, bibendum
                 cursus velit sodales. Donec sed neque eget

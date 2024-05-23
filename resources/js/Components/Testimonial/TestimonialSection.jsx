@@ -14,7 +14,7 @@ const TestimonialSection = ({
         <section className={`py-[70px] bg-[#F2F5F3] ${className}`}>
             <div className="container">
                 <div
-                    className={`grid sm:grid-cols-6 items-center mb-[20px] sm:mb-[40px] ${className}`}
+                    className={`grid sm:grid-cols-6 items-center mb-[20px] sm:mb-[40px] `}
                 >
                     <div className="title col-span-5">
                         <p className="text-primary font-semibold text-sm sm:text-xl">
@@ -42,6 +42,17 @@ const TestimonialSection = ({
                     slidesPerView={3}
                     onSlideChange={() => console.log("slide change")}
                     onSwiper={(swiper) => setSwiper(swiper)}
+                    breakpoints={{
+                        320: {
+                            slidesPerView: 1,
+                        },
+                        800: {
+                            slidesPerView: 2,
+                        },
+                        1100: {
+                            slidesPerView: 3,
+                        },
+                    }}
                 >
                     {reviews.map((review, index) => (
                         <SwiperSlide key={index}>

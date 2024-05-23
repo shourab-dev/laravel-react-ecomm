@@ -4,7 +4,7 @@ const Counter = ({
     counter = { num: 500, title: "Testing...", suffix: "+" },
 }) => {
     return (
-        <div className="text-white bg-white/10 max-w-[312px] text-center py-[40px]">
+        <div className="text-white bg-white/10 sm:max-w-[312px] text-center py-[40px]">
             <h3 className="font-popins font-normal text-5xl text-primary">
                 <span>
                     <CountUp

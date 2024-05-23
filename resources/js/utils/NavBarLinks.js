@@ -27,4 +27,27 @@ const menus = [
     },
 ];
 
-export { menus };
+const myAccounts = [
+    {
+        id: 1,
+        label: "My Account",
+        url: "home",
+    },
+    {
+        id: 2,
+        label: "Order History",
+        url: "home",
+    },
+    {
+        id: 3,
+        label: "Shipping Cart",
+        url: "home",
+    },
+    {
+        id: 4,
+        label: "Whishlist",
+        url: "home",
+    },
+];
+
+export { menus, myAccounts };
