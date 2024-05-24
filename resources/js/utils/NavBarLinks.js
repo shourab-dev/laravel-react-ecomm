@@ -25,6 +25,7 @@ const menus = [
         title: "Contact Us",
         url: `contact`,
     },
+  
 ];
 
 const myAccounts = [
@@ -50,4 +51,37 @@ const myAccounts = [
     },
 ];
 
-export { menus, myAccounts };
+const profileSidebar = [
+    {
+        id: 1,
+        label: "Dashboard",
+        url: "profile.show",
+    },
+    {
+        id: 2,
+        label: "Order History",
+        url: "hellow",
+    },
+    {
+        id: 3,
+        label: "Wishlist",
+        url: "hellow",
+    },
+    {
+        id: 4,
+        label: "Shopping Cart",
+        url: "hellow",
+    },
+    {
+        id: 5,
+        label: "Settings",
+        url: "hellow",
+    },
+    {
+        id: 6,
+        label: "Log-out",
+        url: "hellow",
+    },
+];
+
+export { menus, myAccounts, profileSidebar };

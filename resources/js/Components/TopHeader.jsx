@@ -16,7 +16,7 @@ const TopHeader = () => {
                     <form action="">
                         <CurrencySelect options={["Eng", "Bng"]} />
                         <CurrencySelect options={["USD", "TAKA"]} />
-                        <Link href="#" className="ms-3">
+                        <Link href={route('signin.show')} className="ms-3">
                             Sign In / Sign Up
                         </Link>
                     </form>

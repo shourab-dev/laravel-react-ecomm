@@ -1,9 +1,12 @@
 <?php
 
-use App\Http\Controllers\Frontend\CategoryController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProductController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Frontend\CategoryController;
+use App\Http\Controllers\Frontend\User\LoginController;
+use App\Http\Controllers\Frontend\User\ProfileController;
+use App\Http\Controllers\Frontend\User\RegisterController;
 
 
 Route::get('/', [HomeController::class, 'showHomePage'])->name('home');
@@ -29,3 +32,16 @@ Route::get('/search/{title}', [ProductController::class, 'searchProducts'])->nam
 
 //* GET ALL CATEGORIES FOR FRONTEND
 Route::get('/get-categories', [CategoryController::class, 'getCategoriesData'])->name('categories.data.all');
+
+
+//* USER LOGIN PANEL
+Route::get('/sign-in', [LoginController::class, 'showLogin'])->name('signin.show');
+Route::post('/sign-in', [LoginController::class, 'attemptLogin'])->name('signin.attempt');
+Route::get('/sign-up', [RegisterController::class, 'showRegister'])->name('signup.show');
+Route::post('/sign-up', [RegisterController::class, 'attemptRegister'])->name('signup.attempt');
+
+//* USER PROFILE
+Route::prefix('/profile')->name('profile.')->controller(ProfileController::class)->middleware('customer')->group(function () {
+
+    Route::get('/', "showProfile")->name('show');
+});

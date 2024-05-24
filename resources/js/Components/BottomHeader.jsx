@@ -4,7 +4,7 @@ import MenuDropDown from "./MenuDropDown";
 import { Link } from "@inertiajs/react";
 import { MdOutlinePhoneInTalk } from "react-icons/md";
 
-const BottomHeader = ({categories}) => {
+const BottomHeader = ({ categories, auth }) => {
     return (
         <div className="bg-white border-t border-b shadow hidden md:block">
             <div className="container grid grid-cols-12 items-center">
@@ -14,7 +14,7 @@ const BottomHeader = ({categories}) => {
                 <div className="col-span-8 px-10 text-center">
                     {menus.map((menu, index) => (
                         <Link
-                        key={menu.id}
+                            key={menu.id}
                             className={`hover:text-primary text-gray-500 font-bold me-[32px] ${
                                 route().current(menu.url) ? "text-primary" : ""
                             }`}
@@ -23,9 +23,23 @@ const BottomHeader = ({categories}) => {
                             {menu.title}
                         </Link>
                     ))}
+                    {console.log(auth)}
+                    {auth?.customer && (
+                        <Link
+                            className={`hover:text-primary text-gray-500 font-bold me-[32px] ${
+                                route().current(menu.url) ? "text-primary" : ""
+                            }`}
+                            href={route('profile.show')}
+                        >
+                            My Profile
+                        </Link>
+                    )}
                 </div>
                 <div className="col-span-2">
-                    <a href="tel:(219) 555-0114" className="flex items-center justify-end text-md ">
+                    <a
+                        href="tel:(219) 555-0114"
+                        className="flex items-center justify-end text-md "
+                    >
                         <MdOutlinePhoneInTalk className="me-2 text-2xl" />
                         (219) 555-0114
                     </a>
