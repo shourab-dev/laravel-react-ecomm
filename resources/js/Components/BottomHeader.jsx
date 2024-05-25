@@ -3,8 +3,11 @@ import { menus } from "@/utils/NavBarLinks";
 import MenuDropDown from "./MenuDropDown";
 import { Link } from "@inertiajs/react";
 import { MdOutlinePhoneInTalk } from "react-icons/md";
+import { useSelector } from "react-redux";
 
-const BottomHeader = ({ categories, auth }) => {
+const BottomHeader = ({ categories }) => {
+    const authCustomer = useSelector((state) => state.authCustomer);
+
     return (
         <div className="bg-white border-t border-b shadow hidden md:block">
             <div className="container grid grid-cols-12 items-center">
@@ -23,13 +26,13 @@ const BottomHeader = ({ categories, auth }) => {
                             {menu.title}
                         </Link>
                     ))}
-                    {console.log(auth)}
-                    {auth?.customer && (
+
+                    {authCustomer && (
                         <Link
                             className={`hover:text-primary text-gray-500 font-bold me-[32px] ${
-                                route().current(menu.url) ? "text-primary" : ""
+                                route().current('profile.show') ? "text-primary" : ""
                             }`}
-                            href={route('profile.show')}
+                            href={route("profile.show")}
                         >
                             My Profile
                         </Link>

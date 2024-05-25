@@ -60,27 +60,27 @@ const profileSidebar = [
     {
         id: 2,
         label: "Order History",
-        url: "hellow",
+        url: "home",
     },
     {
         id: 3,
         label: "Wishlist",
-        url: "hellow",
+        url: "home",
     },
     {
         id: 4,
         label: "Shopping Cart",
-        url: "hellow",
+        url: "home",
     },
     {
         id: 5,
         label: "Settings",
-        url: "hellow",
+        url: "home",
     },
     {
         id: 6,
         label: "Log-out",
-        url: "hellow",
+        url: "signout.attempt",
     },
 ];
 

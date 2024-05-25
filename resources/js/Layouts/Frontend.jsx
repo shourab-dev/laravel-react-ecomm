@@ -2,29 +2,38 @@ import Navbar from "@/Components/Navbar";
 import React from "react";
 import { Head, Link } from "@inertiajs/react";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { storeCategories } from "@/store/slices/CategorySlice";
 import IconBox from "@/Components/IconBox";
 import Newsletter from "@/Components/Newsletter";
 import SocialMediaLists from "@/Components/SocialMediaLists";
 import VerticalMenu from "@/Components/VerticalMenu";
 import { myAccounts } from "@/utils/NavBarLinks";
+import { setUsers } from "@/store/slices/UserSlice";
 
 const Frontend = ({ children, pageTitle = "Ecommerce" }) => {
-    const [categories, setCategories] = useState(null);
     const dispatch = useDispatch();
+    const authCustomer = useSelector((state) => state.authCustomer);
+    const categories = useSelector((state) => state.categories);
 
     useEffect(() => {
-        axios.get(route("categories.data.all")).then(({ data }) => {
-            dispatch(storeCategories(data));
-        });
+        if (!categories) {
+            axios.get(route("categories.data.all")).then(({ data }) => {
+                dispatch(storeCategories(data));
+            });
+        }
+        if (!authCustomer) {
+            axios.get(route("auth.customer.get")).then(({ data }) => {
+                dispatch(setUsers(data));
+            });
+        }
     }, []);
 
     return (
         <>
             <Head title={pageTitle} />
 
-            <Navbar categories={categories} />
+            <Navbar />
             {children}
 
             {/* PREFOOTER  */}

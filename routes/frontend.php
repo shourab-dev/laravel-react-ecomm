@@ -39,9 +39,15 @@ Route::get('/sign-in', [LoginController::class, 'showLogin'])->name('signin.show
 Route::post('/sign-in', [LoginController::class, 'attemptLogin'])->name('signin.attempt');
 Route::get('/sign-up', [RegisterController::class, 'showRegister'])->name('signup.show');
 Route::post('/sign-up', [RegisterController::class, 'attemptRegister'])->name('signup.attempt');
+Route::get('/sign-out', [LoginController::class, 'signOut'])->name('signout.attempt');
 
 //* USER PROFILE
 Route::prefix('/profile')->name('profile.')->controller(ProfileController::class)->middleware('customer')->group(function () {
-
     Route::get('/', "showProfile")->name('show');
 });
+
+
+
+
+//* GET AUTH CUSTOMER
+Route::get('/get-auth-customer', [ProfileController::class, 'getAuthCustomer'])->name('auth.customer.get');

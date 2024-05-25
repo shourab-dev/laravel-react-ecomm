@@ -7,7 +7,14 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    function showProfile() {
+    function showProfile()
+    {
+
         return inertia('Frontend/Profile');
+    }
+
+    function getAuthCustomer()
+    {
+        return auth('customer')->user();
     }
 }

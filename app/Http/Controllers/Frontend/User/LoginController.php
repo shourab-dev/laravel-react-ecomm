@@ -29,4 +29,10 @@ class LoginController extends Controller
             ])->onlyInput('email');
         }
     }
+
+
+    function signOut() {
+        auth('customer')->logout();
+        return to_route('home');
+    }
 }
