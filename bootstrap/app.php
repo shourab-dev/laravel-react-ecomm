@@ -23,9 +23,9 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         $middleware->alias([
             'customer' => CustomerMiddleware::class,
+        //
         ]);
 
-        //
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
