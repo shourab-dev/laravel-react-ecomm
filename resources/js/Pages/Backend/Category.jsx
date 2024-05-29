@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import Title from "@/Components/Title";
 import Table from "@/Components/Table";
 import TableHeading from "@/Components/TableHeading";
@@ -9,8 +9,52 @@ import { statusCheck } from "@/utils/statusChecker";
 import { FiEdit2 } from "react-icons/fi";
 import { MdOutlineDelete } from "react-icons/md";
 import Pagination from "@/Components/Pagination";
+import Modal from "@/Components/Modal";
+import TextInput from "@/Components/TextInput";
+import PrimaryButton from "@/Components/PrimaryButton";
+import InputLabel from "@/Components/InputLabel";
 
 const Category = ({ auth, categories }) => {
+    const [modal, setModal] = useState(false);
+    const { data, setData, errors, post, reset } = useForm({
+        id: null,
+        icon: null,
+        title: "",
+    });
+
+    // const [selectedCategory, setSelectedCategory] = useState(null);
+
+    const handleCreateOrUpdate = (e) => {
+        e.preventDefault();
+        post(route("admin.category.storeOrUpdate", data?.id), {
+            preserveScroll: true,
+            onSuccess: (e) => {
+                setModal(false);
+            },
+        });
+    };
+
+    const handleEdit = (category) => {
+        setData({
+            id: category.id,
+            title: category.title,
+            icon: category.icon,
+        });
+        setModal(true);
+    };
+
+    const statusToggle = ({ id }) => {
+        post(route("admin.category.updateStatus", id), {
+            preserveScroll: true,
+        });
+    };
+
+    const handleDelete = ({ id }) => {
+        post(route("admin.category.delete", id),{
+            preserveScroll: true,
+        });
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -28,8 +72,9 @@ const Category = ({ auth, categories }) => {
                         <div className="p-6 text-gray-900">
                             <Title
                                 title="Category"
-                                url="#"
+                                url="home"
                                 label="Add Category"
+                                action={(e) => setModal(true)}
                             />
 
                             <Table className={`mt-8`}>
@@ -42,7 +87,6 @@ const Category = ({ auth, categories }) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {console.log(categories)}
                                     {categories.data?.map((category, index) => (
                                         <tr key={category.id}>
                                             <TableCell className="text-center">
@@ -53,6 +97,9 @@ const Category = ({ auth, categories }) => {
                                             </TableCell>
                                             <TableCell className="text-center">
                                                 <button
+                                                    onClick={(e) =>
+                                                        statusToggle(category)
+                                                    }
                                                     className={`${
                                                         statusCheck[
                                                             category.status
@@ -67,13 +114,23 @@ const Category = ({ auth, categories }) => {
                                                 </button>
                                             </TableCell>
                                             <TableCell className="text-center">
-                                                <Link className="text-blue-500 mx-2">
+                                                <button
+                                                    onClick={(e) =>
+                                                        handleEdit(category)
+                                                    }
+                                                    className="text-blue-500 mx-2"
+                                                >
                                                     <FiEdit2 />
-                                                </Link>
+                                                </button>
 
-                                                <Link className="text-red-500">
+                                                <button
+                                                    onClick={(e) =>
+                                                        handleDelete(category)
+                                                    }
+                                                    className="text-red-500"
+                                                >
                                                     <MdOutlineDelete />
-                                                </Link>
+                                                </button>
                                             </TableCell>
                                         </tr>
                                     ))}
@@ -89,6 +146,51 @@ const Category = ({ auth, categories }) => {
                     </div>
                 </div>
             </div>
+            <Modal
+                show={modal}
+                title={`Add Category`}
+                onClose={(e) => {
+                    setModal(false);
+                    reset();
+                }}
+            >
+                <form
+                    onSubmit={handleCreateOrUpdate}
+                    className="text-end relative"
+                >
+                    <TextInput
+                        defaultValue={data.title}
+                        initialvalue={data.title}
+                        onChange={(e) => setData("title", e.target.value)}
+                        className="w-full"
+                        placeholder="Category"
+                    />
+                    {data.icon && (
+                        <img
+                            src={
+                                typeof data.icon == "object"
+                                    ? URL.createObjectURL(data.icon)
+                                    : `/${data.icon}`
+                            }
+                            alt=""
+                            className="max-w-[80px] my-2"
+                        />
+                    )}
+                    <InputLabel className="text-start my-2">
+                        Category Icon
+                        <TextInput
+                            initialvalue={data.icon}
+                            type="file"
+                            className="w-full"
+                            onChange={(e) => setData("icon", e.target.files[0])}
+                        />
+                    </InputLabel>
+
+                    <PrimaryButton className="">
+                        {!data.id ? `Add` : "Update"} Category
+                    </PrimaryButton>
+                </form>
+            </Modal>
         </AuthenticatedLayout>
     );
 };

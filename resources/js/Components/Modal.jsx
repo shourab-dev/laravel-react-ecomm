@@ -1,7 +1,14 @@
-import { Fragment } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-
-export default function Modal({ children, show = false, maxWidth = '2xl', closeable = true, onClose = () => {} }) {
+import { Fragment } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { IoMdClose } from "react-icons/io";
+export default function Modal({
+    title = null,
+    children,
+    show = false,
+    maxWidth = "2xl",
+    closeable = true,
+    onClose = () => {},
+}) {
     const close = () => {
         if (closeable) {
             onClose();
@@ -9,11 +16,11 @@ export default function Modal({ children, show = false, maxWidth = '2xl', closea
     };
 
     const maxWidthClass = {
-        sm: 'sm:max-w-sm',
-        md: 'sm:max-w-md',
-        lg: 'sm:max-w-lg',
-        xl: 'sm:max-w-xl',
-        '2xl': 'sm:max-w-2xl',
+        sm: "sm:max-w-sm",
+        md: "sm:max-w-md",
+        lg: "sm:max-w-lg",
+        xl: "sm:max-w-xl",
+        "2xl": "sm:max-w-2xl",
     }[maxWidth];
 
     return (
@@ -48,7 +55,18 @@ export default function Modal({ children, show = false, maxWidth = '2xl', closea
                     <Dialog.Panel
                         className={`mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto ${maxWidthClass}`}
                     >
-                        {children}
+                        {title && (
+                            <div className="modalHeader p-2 border-b flex items-center justify-between font-bold">
+                                <h3>{title}</h3>
+                                <span
+                                    className="cursor-pointer "
+                                    onClick={onClose}
+                                >
+                                    <IoMdClose />
+                                </span>
+                            </div>
+                        )}
+                        <div className="body p-2">{children}</div>
                     </Dialog.Panel>
                 </Transition.Child>
             </Dialog>
