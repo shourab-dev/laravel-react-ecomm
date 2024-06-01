@@ -1,12 +1,16 @@
-import React from "react";
+import React, { Fragment } from "react";
 import SubCategoryList from "./SubCategoryList";
+import TableCell from "../TableCell";
+import { statusCheck } from "@/utils/statusChecker";
+import { FiEdit2 } from "react-icons/fi";
+import { MdOutlineDelete } from "react-icons/md";
 
-const Categories = ({ categories, handleEdit, handleDelete }) => {
+const CategoryLists = ({ categories, handleEdit, handleDelete }) => {
     return (
         <>
             {categories.data?.map((category, index) => (
-                <>
-                    <tr key={category.id}>
+                <Fragment key={category.id}>
+                    <tr>
                         <TableCell className="text-center">
                             {categories.from + index}
                         </TableCell>
@@ -44,10 +48,10 @@ const Categories = ({ categories, handleEdit, handleDelete }) => {
                         handleEdit={handleEdit}
                         handleDelete={handleDelete}
                     />
-                </>
+                </Fragment>
             ))}
         </>
     );
 };
 
-export default Categories;
+export default CategoryLists;

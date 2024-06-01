@@ -15,6 +15,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import InputLabel from "@/Components/InputLabel";
 import InputError from "@/Components/InputError";
 import InputSelect from "@/Components/InputSelect";
+import CategoryLists from "@/Components/Categories/CategoryLists";
 
 const Category = ({ auth, categories }) => {
     const [modal, setModal] = useState(false);
@@ -40,6 +41,7 @@ const Category = ({ auth, categories }) => {
             id: category.id,
             title: category.title,
             icon: category.icon,
+            parentId: category.category_id,
         });
         setModal(true);
     };
@@ -51,7 +53,7 @@ const Category = ({ auth, categories }) => {
     };
 
     const handleDelete = ({ id }) => {
-        if (confirm("Are you sure ?")) {
+        if (confirm(`Are you sure ?`)) {
             post(route("admin.category.delete", id), {
                 preserveScroll: true,
             });
@@ -90,54 +92,11 @@ const Category = ({ auth, categories }) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {console.log(categories.data)}
-                                    {categories.data?.map((category, index) => (
-                                        <tr key={category.id}>
-                                            <TableCell className="text-center">
-                                                {categories.from + index}
-                                            </TableCell>
-                                            <TableCell className="text-center">
-                                                {category.title}
-                                            </TableCell>
-                                            <TableCell className="text-center">
-                                                <button
-                                                    onClick={(e) =>
-                                                        statusToggle(category)
-                                                    }
-                                                    className={`${
-                                                        statusCheck[
-                                                            category.status
-                                                        ].style
-                                                    }`}
-                                                >
-                                                    {
-                                                        statusCheck[
-                                                            category.status
-                                                        ].type
-                                                    }
-                                                </button>
-                                            </TableCell>
-                                            <TableCell className="text-center">
-                                                <button
-                                                    onClick={(e) =>
-                                                        handleEdit(category)
-                                                    }
-                                                    className="text-blue-500 mx-2"
-                                                >
-                                                    <FiEdit2 />
-                                                </button>
-
-                                                <button
-                                                    onClick={(e) =>
-                                                        handleDelete(category)
-                                                    }
-                                                    className="text-red-500"
-                                                >
-                                                    <MdOutlineDelete />
-                                                </button>
-                                            </TableCell>
-                                        </tr>
-                                    ))}
+                                    <CategoryLists
+                                        categories={categories}
+                                        handleEdit={handleEdit}
+                                        handleDelete={handleDelete}
+                                    />
                                 </tbody>
                             </Table>
                             {categories.last_page > 1 && (
@@ -197,13 +156,14 @@ const Category = ({ auth, categories }) => {
                         Parent Category
                         <InputSelect
                             defaultValue={data.parentId}
+                            initialvalue={data.parentId}
                             onChange={(e) =>
                                 setData("parentId", e.target.value)
                             }
                             placeHolder={`Select an category`}
                         >
                             {categories.data?.map((category) => (
-                                <option value={category.id} key={category.id}>
+                                <option key={category.id} value={category.id}>
                                     {category.title}
                                 </option>
                             ))}

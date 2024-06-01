@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,13 @@ Route::middleware('auth')->prefix('/admin')->name('admin.')->group(function () {
         Route::post('/update-status/{id}', 'toggleStatus')->name('updateStatus');
         Route::post('/delete/{id}', 'deleteCategory')->name('delete');
     });
+
+
+    Route::prefix('/products')->name('products.')->controller(ProductController::class)->group(function(){
+        Route::get('/', 'viewAllProducts')->name('all');
+    });
+
+
 });
 
 

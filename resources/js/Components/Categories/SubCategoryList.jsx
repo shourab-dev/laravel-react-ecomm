@@ -1,6 +1,8 @@
 import React from "react";
 import TableCell from "../TableCell";
 import { statusCheck } from "@/utils/statusChecker";
+import { FiEdit2 } from "react-icons/fi";
+import { MdOutlineDelete } from "react-icons/md";
 
 const SubCategoryList = ({ subCategories, handleEdit, handleDelete }) => {
     return (
@@ -8,7 +10,7 @@ const SubCategoryList = ({ subCategories, handleEdit, handleDelete }) => {
             {subCategories?.map((category, index) => (
                 <tr key={category.id}>
                     <TableCell className="text-center">
-                        {categories.from + index}
+                        --
                     </TableCell>
                     <TableCell className="text-center">
                         {category.title}

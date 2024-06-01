@@ -9,6 +9,11 @@ const backendLinks = [
         label: "Category",
         url: "admin.category.index",
     },
+    {
+        id: 3,
+        label: "Products",
+        url: "admin.products.all",
+    },
 ];
 
 export { backendLinks };
