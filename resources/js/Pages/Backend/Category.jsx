@@ -13,6 +13,8 @@ import Modal from "@/Components/Modal";
 import TextInput from "@/Components/TextInput";
 import PrimaryButton from "@/Components/PrimaryButton";
 import InputLabel from "@/Components/InputLabel";
+import InputError from "@/Components/InputError";
+import InputSelect from "@/Components/InputSelect";
 
 const Category = ({ auth, categories }) => {
     const [modal, setModal] = useState(false);
@@ -20,9 +22,8 @@ const Category = ({ auth, categories }) => {
         id: null,
         icon: null,
         title: "",
+        parentId: null,
     });
-
-    // const [selectedCategory, setSelectedCategory] = useState(null);
 
     const handleCreateOrUpdate = (e) => {
         e.preventDefault();
@@ -50,9 +51,11 @@ const Category = ({ auth, categories }) => {
     };
 
     const handleDelete = ({ id }) => {
-        post(route("admin.category.delete", id),{
-            preserveScroll: true,
-        });
+        if (confirm("Are you sure ?")) {
+            post(route("admin.category.delete", id), {
+                preserveScroll: true,
+            });
+        }
     };
 
     return (
@@ -87,6 +90,7 @@ const Category = ({ auth, categories }) => {
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {console.log(categories.data)}
                                     {categories.data?.map((category, index) => (
                                         <tr key={category.id}>
                                             <TableCell className="text-center">
@@ -165,6 +169,9 @@ const Category = ({ auth, categories }) => {
                         className="w-full"
                         placeholder="Category"
                     />
+                    <div className="text-start">
+                        {<InputError message={errors.title} />}
+                    </div>
                     {data.icon && (
                         <img
                             src={
@@ -184,6 +191,23 @@ const Category = ({ auth, categories }) => {
                             className="w-full"
                             onChange={(e) => setData("icon", e.target.files[0])}
                         />
+                    </InputLabel>
+
+                    <InputLabel className="text-start my-2">
+                        Parent Category
+                        <InputSelect
+                            defaultValue={data.parentId}
+                            onChange={(e) =>
+                                setData("parentId", e.target.value)
+                            }
+                            placeHolder={`Select an category`}
+                        >
+                            {categories.data?.map((category) => (
+                                <option value={category.id} key={category.id}>
+                                    {category.title}
+                                </option>
+                            ))}
+                        </InputSelect>
                     </InputLabel>
 
                     <PrimaryButton className="">
