@@ -37,4 +37,30 @@ trait MediaUploader
         $old = str($old)->replace('storage/', '');
         Storage::disk($visibility)->delete($old);
     }
+
+
+
+    function uploadMultiMedia($files = [],  $olds = [], $dir = 'others', $visibility = 'public')
+    {
+
+        if (count($files) > 0) {
+
+            if (count($olds) > 0) {
+                foreach ($olds as $old) {
+                    $old = str($old)->replace('storage/', '');
+                    Storage::disk($visibility)->delete($old);
+                }
+            }
+
+
+            $media = [];
+            foreach ($files as $file) {
+
+                $links = 'storage/' . $file->store($dir, $visibility);
+                $media[] = $links;
+            }
+
+            return $media;
+        }
+    }
 }

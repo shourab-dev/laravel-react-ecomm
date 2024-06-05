@@ -27,11 +27,10 @@ Route::middleware('auth')->prefix('/admin')->name('admin.')->group(function () {
     });
 
 
-    Route::prefix('/products')->name('products.')->controller(ProductController::class)->group(function(){
+    Route::prefix('/products')->name('products.')->controller(ProductController::class)->group(function () {
         Route::get('/', 'viewAllProducts')->name('all');
+        Route::post('/store-update/{id?}', 'storeProduct')->name('store');
     });
-
-
 });
 
 

@@ -1,9 +1,17 @@
 import React, { useState } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import Title from "@/Components/Title";
 import Modal from "@/Components/Modal";
-const Products = ({ auth }) => {
+import TextInput from "@/Components/TextInput";
+import InputLabel from "@/Components/InputLabel";
+import { IoIosClose } from "react-icons/io";
+import TextArea from "@/Components/TextArea";
+import PrimaryButton from "@/Components/PrimaryButton";
+import AddProduct from "@/Components/Products/AddProduct";
+import AllProducts from "@/Components/Products/AllProducts";
+
+const Products = ({ auth, products }) => {
     const [modal, setModal] = useState(false);
 
     return (
@@ -24,14 +32,19 @@ const Products = ({ auth }) => {
                             <Title
                                 title="Manage Products"
                                 label="Add Product"
-                                action={e=> setModal(true)}
+                                action={(e) => setModal(true)}
                             />
+                            <AllProducts products={products} className='mt-5' />
                         </div>
                     </div>
                 </div>
             </div>
-            <Modal title={`Add Product`} show={modal} onClose={(e) => setModal(false)}>
-                
+            <Modal
+                title={`Add Product`}
+                show={modal}
+                onClose={(e) => setModal(false)}
+            >
+                <AddProduct modal={setModal} />
             </Modal>
         </AuthenticatedLayout>
     );
