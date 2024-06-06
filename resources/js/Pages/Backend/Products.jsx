@@ -10,6 +10,7 @@ import TextArea from "@/Components/TextArea";
 import PrimaryButton from "@/Components/PrimaryButton";
 import AddProduct from "@/Components/Products/AddProduct";
 import AllProducts from "@/Components/Products/AllProducts";
+import MultiStepForm from "@/Components/Forms/MultiStepForm";
 
 const Products = ({ auth, products }) => {
     const [modal, setModal] = useState(false);
@@ -44,7 +45,8 @@ const Products = ({ auth, products }) => {
                 show={modal}
                 onClose={(e) => setModal(false)}
             >
-                <AddProduct modal={setModal} />
+                {/* <AddProduct modal={setModal} /> */}
+                <MultiStepForm/>
             </Modal>
         </AuthenticatedLayout>
     );

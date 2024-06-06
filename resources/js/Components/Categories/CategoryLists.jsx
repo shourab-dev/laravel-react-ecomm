@@ -5,7 +5,12 @@ import { statusCheck } from "@/utils/statusChecker";
 import { FiEdit2 } from "react-icons/fi";
 import { MdOutlineDelete } from "react-icons/md";
 
-const CategoryLists = ({ categories, handleEdit, handleDelete }) => {
+const CategoryLists = ({
+    categories,
+    handleEdit,
+    handleDelete,
+    statusToggle,
+}) => {
     return (
         <>
             {categories.data?.map((category, index) => (
@@ -19,7 +24,9 @@ const CategoryLists = ({ categories, handleEdit, handleDelete }) => {
                         </TableCell>
                         <TableCell className="text-center">
                             <button
-                                onClick={(e) => statusToggle(category)}
+                                onClick={(e) =>
+                                    statusToggle(category, "admin.category.delete")
+                                }
                                 className={`${
                                     statusCheck[category.status].style
                                 }`}

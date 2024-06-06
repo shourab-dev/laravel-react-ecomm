@@ -93,6 +93,7 @@ const Category = ({ auth, categories }) => {
                                 </thead>
                                 <tbody>
                                     <CategoryLists
+                                        statusToggle={statusToggle}
                                         categories={categories}
                                         handleEdit={handleEdit}
                                         handleDelete={handleDelete}
