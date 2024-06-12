@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Gallery;
 use App\Models\Product;
 use App\Traits\SlugGenerator;
@@ -16,13 +17,28 @@ class ProductController extends Controller
     function viewAllProducts()
     {
         $products = Product::paginate(20);
-        return inertia('Backend/Products', [
+        return inertia('Backend/Products/Products', [
             'products' => $products
+        ]);
+    }
+
+    function addProducts($id = null)
+    {
+        $categories = Category::where('status', true)->select('title as label', 'id as value')->get();
+        $editedProduct = null;
+        if ($id) {
+            $editedProduct  = Product::with('galleries', 'categories:id as value,title as label')->findOrFail($id);
+        }
+        return inertia('Backend/Products/AddProducts', [
+            'categories' => $categories,
+            'product' => $editedProduct,
         ]);
     }
 
     function storeProduct(Request $request, $id = null)
     {
+
+
 
         //* VALIDATION
         $request->validate([
@@ -56,7 +72,7 @@ class ProductController extends Controller
         }
         $product->status = $request->status;
         $product->featured = $request->featured;
-
+        $product->cross_sell = $request->crossProducts ? json_encode($request->crossProducts) : $product->cross_sell;
         $product->save();
 
         //* SET IF REQUEST HAS GALLERIES 
@@ -74,5 +90,29 @@ class ProductController extends Controller
                 $productGallery->save();
             }
         }
+
+
+        //* STORE OR SYNC CATEGORIES
+
+        $categories = collect($request->categories)->pluck('value');
+        $product->categories()->sync($categories);
+
+
+
+        return  to_route('admin.products.all');
+    }
+
+
+    function getCrossProducts($search = null)
+    {
+        if ($search) {
+            $query = Product::query();
+            $query->where('title', 'LIKE', '%' . $search . '%');
+            $products = $query->select('id as value', 'title as label')->get();
+        } else {
+
+            $products = [];
+        }
+        return $products;
     }
 }

@@ -23,7 +23,7 @@ const Products = ({ auth, products }) => {
                 </h2>
             }
         >
-            <Head title="Dashboard" />
+            <Head title="Manage products" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -32,7 +32,7 @@ const Products = ({ auth, products }) => {
                             <Title
                                 title="Manage Products"
                                 label="Add Product"
-                                action={(e) => setModal(true)}
+                                url="admin.products.add"
                             />
                             <AllProducts products={products} className='mt-5' />
                         </div>

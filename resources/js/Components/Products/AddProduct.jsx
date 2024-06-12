@@ -4,44 +4,35 @@ import InputLabel from "@/Components/InputLabel";
 import { IoIosClose } from "react-icons/io";
 import TextArea from "@/Components/TextArea";
 import PrimaryButton from "@/Components/PrimaryButton";
-import { useForm } from "@inertiajs/react";
+
 import InputError from "../InputError";
+import Select from "react-select";
+import axios from "axios";
 
-const AddProduct = ({modal}) => {
-    const [manageStock, setManageStock] = useState(false);
+const AddProduct = ({
+    manageStock,
+    setManageStock,
+    productStoreOrUpdate,
+    handleStoreProduct,
+    categories = [],
+}) => {
+    const { data, setData, errors } = productStoreOrUpdate;
 
-    const { data, setData, processing, errors, post, reset } = useForm({
-        title: "",
-        shortDetail: null,
-        detail: null,
-        price: "",
-        sellPrice: null,
-        initialStock: null,
-        sku: null,
-        featuredImage: null,
-        galleries: [],
-        stock: true,
-        featured: false,
-        status: true,
-    });
+    const [crossProducts, setCrossProducts] = useState([]);
 
-    //* handle product store
-    const handleStoreProduct = (e) => {
-        e.preventDefault();
-
-        post(route("admin.products.store"), {
-            onSuccess: () => {
-                reset();
-                modal(false);
-            },
-        });
+    const getCrossProducts = (value) => {
+        axios
+            .get(route("admin.products.crossProducts", value))
+            .then(({ data }) => {
+                setCrossProducts(data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
     return (
-        <form
-            onSubmit={handleStoreProduct}
-            className=" h-[500px] overflow-y-auto"
-        >
+        <form onSubmit={handleStoreProduct}>
             <div>
                 <TextInput
                     className="w-full"
@@ -220,6 +211,35 @@ const AddProduct = ({modal}) => {
                     <span className="ms-2">Available Stock</span>
                 </InputLabel>
             </div>
+
+            <hr />
+
+            <div className="my-3">
+                <InputLabel htmlFor="">Select Categories</InputLabel>
+                <Select
+                    placeholder={`Select Categories `}
+                    options={categories}
+                    isMulti={true}
+                    isSearchable={true}
+                    defaultValue={data.categories}
+                    onChange={(value) => setData("categories", value)}
+                ></Select>
+            </div>
+            <hr />
+
+            <div className="my-3">
+                <InputLabel htmlFor="">Select Cross Sell Products</InputLabel>
+                <Select
+                    placeholder={`Select Products `}
+                    options={crossProducts}
+                    isMulti={true}
+                    isSearchable={true}
+                    defaultValue={data.crossProducts}
+                    onChange={(value) => setData("crossProducts", value)}
+                    onInputChange={(e) => getCrossProducts(e)}
+                ></Select>
+            </div>
+
             <PrimaryButton type="submit" className="py-4 w-full justify-center">
                 Add Product
             </PrimaryButton>

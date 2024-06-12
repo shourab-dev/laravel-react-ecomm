@@ -29,7 +29,9 @@ Route::middleware('auth')->prefix('/admin')->name('admin.')->group(function () {
 
     Route::prefix('/products')->name('products.')->controller(ProductController::class)->group(function () {
         Route::get('/', 'viewAllProducts')->name('all');
+        Route::get('/add/{id?}', 'addProducts')->name('add');
         Route::post('/store-update/{id?}', 'storeProduct')->name('store');
+        Route::get('/get-cross-products/{search?}', 'getCrossProducts')->name('crossProducts');
     });
 });
 
