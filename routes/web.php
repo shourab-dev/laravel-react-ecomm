@@ -22,7 +22,7 @@ Route::middleware('auth')->prefix('/admin')->name('admin.')->group(function () {
     Route::prefix('/category')->name('category.')->controller(CategoryController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/store-or-update/{id?}', 'storeOrUpdate')->name('storeOrUpdate');
-        Route::post('/update-status/{id}', 'statusUpdate')->name('updateStatus');
+        Route::post('/update-status/{id}', 'toggleStatus')->name('updateStatus');
         Route::post('/delete/{id}', 'deleteCategory')->name('delete');
     });
 

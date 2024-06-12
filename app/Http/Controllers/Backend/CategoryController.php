@@ -6,12 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Traits\SlugGenerator;
 use App\Traits\Trait\MediaUploader;
-use App\Traits\Traits\StatusUpdate;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    use SlugGenerator, MediaUploader, StatusUpdate;
+    use SlugGenerator, MediaUploader;
     function index()
     {
         $categories = Category::with('subCategories')->where('category_id',null)->select('id', 'title', 'slug', 'status', 'icon')->paginate(20);
@@ -38,12 +37,13 @@ class CategoryController extends Controller
         return to_route('admin.category.index');
     }
 
-    function statusUpdate($id)
+    function toggleStatus($id)
     {
-        $this->toggleStatus(Category::class, $id);
+        $category = Category::find($id);
+        $category->status = !$category->status;
+        $category->save();
+        return to_route('admin.category.index');
     }
-
-    
     function deleteCategory($id)
     {
         Category::findOrFail($id)->delete();
