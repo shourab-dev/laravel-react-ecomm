@@ -6,7 +6,7 @@ import Title from "@/Components/Title";
 import { useForm } from "@inertiajs/react";
 const AddProducts = ({ auth, categories, product }) => {
     const [manageStock, setManageStock] = useState(false);
-    
+
     const productStoreOrUpdate = useForm({
         title: product?.title ?? "",
         shortDetail: product?.short_detail ?? "",
@@ -21,9 +21,13 @@ const AddProducts = ({ auth, categories, product }) => {
         featured: product?.featured ?? false,
         status: product?.status ?? true,
         categories: product?.categories ?? [],
-        crossProducts: product?.cross_sell.length > 0 ? JSON.parse(product?.cross_sell) : [],
+        crossProducts:
+            product?.cross_sell &&
+            (product?.cross_sell.length > 0
+                ? JSON.parse(product?.cross_sell)
+                : []),
     });
-    const { post,reset } = productStoreOrUpdate;
+    const { post, reset } = productStoreOrUpdate;
 
     //* handle product store
     const handleStoreProduct = (e) => {
@@ -32,9 +36,6 @@ const AddProducts = ({ auth, categories, product }) => {
         post(route("admin.products.store"), {
             onSuccess: () => {
                 productStoreOrUpdate.reset();
-                
-                
-                
             },
         });
     };
@@ -54,9 +55,14 @@ const AddProducts = ({ auth, categories, product }) => {
                         <div className="p-6 text-gray-900">
                             <Title
                                 className="mb-3"
-                                title="Add Product"
-                                label="Save Product"
-                                url="admin.products.add"
+                                title={`${
+                                    route().params.id ? "Edit" : "Add"
+                                } Product`}
+                                label={`${
+                                    route().params.id ? "Add " : "Save"
+                                } Product`}
+                                url={`admin.products.add`}
+                                
                             />
                             <AddProduct
                                 product={product}

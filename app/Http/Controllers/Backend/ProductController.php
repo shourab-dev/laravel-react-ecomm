@@ -16,7 +16,7 @@ class ProductController extends Controller
 
     function viewAllProducts()
     {
-        $products = Product::paginate(20);
+        $products = Product::latest()->paginate(20);
         return inertia('Backend/Products/Products', [
             'products' => $products
         ]);
@@ -101,6 +101,28 @@ class ProductController extends Controller
 
         return  to_route('admin.products.all');
     }
+
+
+    function updateFeaturedProducts($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->featured = !$product->featured;
+        $product->save();
+    }
+    function updateStatusProducts($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->status = !$product->status;
+        $product->save();
+    }
+
+    function deleteProduct($id) {
+        $product = Product::findOrFail($id)->delete();
+        
+
+    }
+
+
 
 
     function getCrossProducts($search = null)

@@ -4,10 +4,7 @@ import { Head, Link, useForm } from "@inertiajs/react";
 import Title from "@/Components/Title";
 import Table from "@/Components/Table";
 import TableHeading from "@/Components/TableHeading";
-import TableCell from "@/Components/TableCell";
-import { statusCheck } from "@/utils/statusChecker";
-import { FiEdit2 } from "react-icons/fi";
-import { MdOutlineDelete } from "react-icons/md";
+
 import Pagination from "@/Components/Pagination";
 import Modal from "@/Components/Modal";
 import TextInput from "@/Components/TextInput";

@@ -1,6 +1,12 @@
 import React from "react";
 import { Link } from "@inertiajs/react";
-const Title = ({ title, url = 'home', label, action = null, className = null }) => {
+const Title = ({
+    title,
+    url = "home",
+    label,
+    action = null,
+    className = null,
+}) => {
     const handleClick = (e) => {
         if (action) {
             e.preventDefault();
