@@ -6,8 +6,25 @@ import "swiper/css";
 
 import { Link } from "@inertiajs/react";
 import { LuArrowRight, LuArrowLeft } from "react-icons/lu";
+import { useEffect, useState } from "react";
 
-export default ({ banners = [{}, {}, {}] }) => {
+export default ({ length = 5 }) => {
+    const [banners, setBanners] = useState([]);
+    useEffect(() => {
+        axios
+            .get(route("getFeaturedProducts"), {
+                params: {
+                    length,
+                },
+            })
+            .then(({ data }) => {
+                setBanners(data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
+
     return (
         <Swiper
             modules={[Navigation, Pagination, Autoplay]}
@@ -24,12 +41,11 @@ export default ({ banners = [{}, {}, {}] }) => {
             pagination={{ clickable: true, el: ".pagination" }}
             spaceBetween={0}
             slidesPerView={1}
-            
             className="h-[640px]"
         >
             {banners?.map((banner, index) => (
                 <SwiperSlide
-                key={index}
+                    key={index}
                     className={`bg-banner-pattern bg-cover bg-center py-10 md:py-0`}
                 >
                     {({ isActive }) => (
@@ -76,7 +92,11 @@ export default ({ banners = [{}, {}, {}] }) => {
                             <div className="container grid md:grid-cols-2 h-full items-center md:gap-14">
                                 <div className="bannerImage">
                                     <img
-                                        src="/frontend/images/bannerImage.png"
+                                        src={
+                                            banner.featured_img
+                                                ? banner.featured_img
+                                                : "/frontend/images/placeholder.webp"
+                                        }
                                         alt=""
                                         className="w-full block"
                                     />
@@ -85,20 +105,32 @@ export default ({ banners = [{}, {}, {}] }) => {
                                     <p className="text-primary text-sm font-bold mb-3">
                                         Welcome to shopery
                                     </p>
-                                    <h2 className="text-4xl md:text-6xl font-semibold font-popins">
-                                        Fresh & Healthy Organic Food
+                                    <h2 className="text-4xl md:text-6xl font-semibold font-popins capitalize">
+                                        {banner.title}
                                     </h2>
-                                    <p className="text-2xl font-bold  mt-5">
-                                        Sale up to{" "}
-                                        <span className="text-orange-500">
-                                            30% OFF
-                                        </span>
-                                    </p>
+                                    {banner.price && banner.sell_price && (
+                                        <p className="text-2xl font-bold  mt-5">
+                                            Sale up to{" "}
+                                            <span className="text-orange-500">
+                                                {Math.round(
+                                                    (100 / banner.price) *
+                                                        banner.sell_price
+                                                )}
+                                                % OFF
+                                            </span>
+                                        </p>
+                                    )}
                                     <p className="text-sm mt-3">
                                         Free shipping on all your order. we
                                         deliver, you enjoy
                                     </p>
-                                    <Link className="btn rounded-md md:rounded-full mt-[20px]">
+                                    <Link
+                                        className="btn rounded-md md:rounded-full mt-[20px]"
+                                        href={route(
+                                            "product.view",
+                                            banner.slug
+                                        )}
+                                    >
                                         <div className="flex items-center">
                                             Shop Now{" "}
                                             <LuArrowRight className="ms-2" />

@@ -15,7 +15,7 @@ const AddProducts = ({ auth, categories, product }) => {
         sellPrice: product?.sell_price ?? "",
         initialStock: null,
         sku: null,
-        featuredImage: null,
+        featuredImage:  null,
         galleries: [],
         stock: product?.stock ?? true,
         featured: product?.featured ?? false,
@@ -33,7 +33,7 @@ const AddProducts = ({ auth, categories, product }) => {
     const handleStoreProduct = (e) => {
         e.preventDefault();
 
-        post(route("admin.products.store"), {
+        post(route("admin.products.store", route().params.id ?? null), {
             onSuccess: () => {
                 productStoreOrUpdate.reset();
             },

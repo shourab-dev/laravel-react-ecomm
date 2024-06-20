@@ -23,7 +23,20 @@ class ProductController extends Controller
     }
 
 
-    function singleProduct() {
+    function singleProduct()
+    {
         return inertia('Frontend/SingleProduct');
+    }
+
+    function getFeaturedProducts(Request $request)
+    {
+        $request->validate(
+            [
+                'length' => 'numeric'
+            ]
+        );
+        
+        $products  = Product::select('id', 'title', 'price', 'sell_price', 'slug', 'status', 'featured', 'featured_img')->where([['status', true], ['featured', true]])->latest()->take($request->length ?? 5)->get();
+        return response()->json($products);
     }
 }

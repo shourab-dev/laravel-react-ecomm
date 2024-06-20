@@ -38,6 +38,7 @@ class ProductController extends Controller
     function storeProduct(Request $request, $id = null)
     {
 
+        
 
 
         //* VALIDATION

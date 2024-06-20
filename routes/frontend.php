@@ -51,3 +51,5 @@ Route::prefix('/profile')->name('profile.')->controller(ProfileController::class
 
 //* GET AUTH CUSTOMER
 Route::get('/get-auth-customer', [ProfileController::class, 'getAuthCustomer'])->name('auth.customer.get');
+
+
