@@ -6,8 +6,9 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import "./thumbSlider.css";
-
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+
+
 
 const ProductThumbSlider = ({ product }) => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -24,6 +25,7 @@ const ProductThumbSlider = ({ product }) => {
 
     return (
         <>
+           
             <Swiper
                 style={{
                     "--swiper-navigation-color": "#fff",
@@ -45,7 +47,6 @@ const ProductThumbSlider = ({ product }) => {
             {product.galleries.length > 0 && (
                 <Swiper
                     onSwiper={setThumbsSwiper}
-                    
                     spaceBetween={15}
                     slidesPerView={4}
                     freeMode={true}
@@ -55,7 +56,10 @@ const ProductThumbSlider = ({ product }) => {
                 >
                     {images.map((thumb, index) => (
                         <SwiperSlide key={thumb.id}>
-                            <img src={`/${thumb.title}`}  className="h-full w-full rounded-lg"/>
+                            <img
+                                src={`/${thumb.title}`}
+                                className="h-full w-full rounded-lg"
+                            />
                         </SwiperSlide>
                     ))}
                 </Swiper>
