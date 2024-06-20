@@ -114,7 +114,8 @@ export default ({ length = 5 }) => {
                                             <span className="text-orange-500">
                                                 {Math.round(
                                                     (100 / banner.price) *
-                                                        banner.sell_price
+                                                        (banner.price -
+                                                            banner.sell_price)
                                                 )}
                                                 % OFF
                                             </span>

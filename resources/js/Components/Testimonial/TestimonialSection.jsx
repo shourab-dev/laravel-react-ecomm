@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsArrowRight, BsArrowLeft } from "react-icons/bs";
 // Import Swiper React components
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import TestimonialCard from "./TestimonialCard";
+import axios from "axios";
 
 const TestimonialSection = ({
     title = "What Our Customer Says",
     className,
-    reviews = [{}, {}, {}],
 }) => {
+    const [reviews, setReviews] = useState([]);
+    useEffect(() => {
+        axios.get(route("getProductsReviews")).then(({ data }) => {
+            setReviews([...data]);
+        });
+    }, []);
+
     const [swiper, setSwiper] = useState();
     return (
         <section className={`py-[70px] bg-[#F2F5F3] ${className}`}>
@@ -56,10 +63,11 @@ const TestimonialSection = ({
                 >
                     {reviews.map((review, index) => (
                         <SwiperSlide key={index}>
-                            <TestimonialCard />
+                            <TestimonialCard review={review} />
                         </SwiperSlide>
                     ))}
                 </Swiper>
+                
             </div>
         </section>
     );

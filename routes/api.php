@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Frontend\ProductController;
+use App\Http\Controllers\Frontend\ReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,4 +15,11 @@ Route::get('/user', function (Request $request) {
 
 //* GET ALL FEATURED PRODUCTS
 Route::get('/get-banners', [ProductController::class, 'getFeaturedProducts'])->name('getFeaturedProducts');
-Route::get('/remove-gallery-image/{id}', [ProductController::class,'removeGalleryImage'])->name('removeGalleryImage');
+
+//* REMOVE PRODUCTS FROM GALLERY
+Route::get('/remove-gallery-image/{id}', [ProductController::class, 'removeGalleryImage'])->name('removeGalleryImage');
+
+
+
+//* GET REVIEWS FOR HOME PAGE
+Route::get('/get-reviews', [ReviewController::class, 'getAllReviews'])->name('getProductsReviews');

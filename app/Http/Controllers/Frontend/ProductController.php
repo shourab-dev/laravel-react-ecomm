@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Gallery;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Gallery;
+use Illuminate\Support\Facades\DB;
 use App\Traits\Trait\MediaUploader;
+use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
@@ -26,20 +27,46 @@ class ProductController extends Controller
     }
 
 
-    function singleProduct()
+    function singleProduct($slug)
     {
-        return inertia('Frontend/SingleProduct');
+        $product = Product::where([['slug', $slug], ['status', true]])->with(['galleries', 'reviews'])->first();
+        if (!$product) {
+            return abort(404);
+        }
+        return inertia('Frontend/SingleProduct', [
+            'product' => $product
+        ]);
     }
 
     function getFeaturedProducts(Request $request)
     {
         $request->validate(
             [
-                'length' => 'numeric'
+                'length' => 'numeric',
+                'avg_rating' => 'boolean',
+                'rating' => 'boolean',
+                'gallery' => 'boolean'
             ]
         );
 
-        $products  = Product::select('id', 'title', 'price', 'sell_price', 'slug', 'status', 'featured', 'featured_img')->where([['status', true], ['featured', true]])->latest()->take($request->length ?? 5)->get();
+        $query = Product::query()->select('id', 'title', 'price', 'sell_price', 'slug', 'status', 'featured', 'featured_img');
+
+
+        if ($request->avg_rating) {
+            $query->withCount(['reviews as avgRating' => function ($query) {
+                $query->select(DB::raw('avg(stars)'));
+            }]);
+        }
+        if ($request->rating) {
+            $query->withCount('reviews as totalReviews');
+        }
+        if ($request->gallery) {
+            $query->with('gallery');
+        }
+
+
+
+        $products  = $query->where([['status', true], ['featured', true]])->latest()->take($request->length ?? 5)->get();
         return response()->json($products);
     }
 
