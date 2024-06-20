@@ -14,3 +14,4 @@ Route::get('/user', function (Request $request) {
 
 //* GET ALL FEATURED PRODUCTS
 Route::get('/get-banners', [ProductController::class, 'getFeaturedProducts'])->name('getFeaturedProducts');
+Route::get('/remove-gallery-image/{id}', [ProductController::class,'removeGalleryImage'])->name('removeGalleryImage');

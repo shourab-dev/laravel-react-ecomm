@@ -78,11 +78,11 @@ class ProductController extends Controller
 
         //* SET IF REQUEST HAS GALLERIES 
         if ($request->galleries) {
-            $oldGalleries = Gallery::where('product_id', $product->id)->get();
-            foreach ($oldGalleries as $oldGallery) {
-                $this->deleteMedia($oldGallery->title);
-                $oldGallery->delete();
-            }
+            // $oldGalleries = Gallery::where('product_id', $product->id)->get();
+            // foreach ($oldGalleries as $oldGallery) {
+            //     $this->deleteMedia($oldGallery->title);
+            //     $oldGallery->delete();
+            // }
             $uploadGalleries = $this->uploadMultiMedia($request->galleries, [], 'galleries');
             foreach ($uploadGalleries as $gallery) {
                 $productGallery = new Gallery();
