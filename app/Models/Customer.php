@@ -31,4 +31,11 @@ class Customer extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+
+    function reviews()
+    {
+        return $this->hasMany(Rating::class);
+    }
 }

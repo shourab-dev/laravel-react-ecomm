@@ -15,9 +15,23 @@ const AddProduct = ({
     productStoreOrUpdate,
     handleStoreProduct,
     categories = [],
+    product = {},
 }) => {
+    const [editedGallery, setEditedGallery] = useState(
+        product?.galleries ?? []
+    );
     const { data, setData, errors } = productStoreOrUpdate;
-
+    const removeGalleryImage = (id, index) => {
+        if (product && product.galleries) {
+            editedGallery.splice(index, 1);
+            setEditedGallery([...editedGallery]);
+        }
+        try {
+            axios.get(route(`removeGalleryImage`, id));
+        } catch (error) {
+            console.log(error);
+        }
+    };
     const [crossProducts, setCrossProducts] = useState([]);
 
     const getCrossProducts = (value) => {
@@ -99,20 +113,27 @@ const AddProduct = ({
             </div>
 
             <div className="my-3">
-                {data.featuredImage && (
+                {(data.featuredImage || product?.featured_img) && (
                     <div className="relative w-fit">
                         <span
-                            onClick={(e) => setData("featuredImage", "")}
+                            onClick={(e) => {
+                                setData("featuredImage", "");
+                                if (product && product.featured_img) {
+                                    product.featured_img = null;
+                                }
+                            }}
                             className="absolute size-[20px]  rounded-full text-center bg-gray-500 text-white cursor-pointer leading-[18px] hover:bg-gray-800 font-bold right-0"
                         >
                             <IoIosClose />
                         </span>
+
                         <img
                             src={
-                                data.featuredImage &&
-                                URL.createObjectURL(data.featuredImage)
+                                product?.featured_img && !data.featuredImage
+                                    ? `/${product.featured_img}`
+                                    : data.featuredImage &&
+                                      URL.createObjectURL(data.featuredImage)
                             }
-                            alt=""
                             className="w-[80px] block"
                         />
                     </div>
@@ -132,7 +153,8 @@ const AddProduct = ({
                 </InputLabel>
             </div>
             <div className="my-3">
-                {data.galleries.length != 0 && (
+                {(data.galleries.length != 0 ||
+                    product?.galleries.length != 0) && (
                     <div className="grid grid-cols-6 gap-3">
                         {data.galleries.map((gallery, index) => (
                             <div className="relative w-fit" key={index}>
@@ -152,6 +174,31 @@ const AddProduct = ({
                                 />
                             </div>
                         ))}
+
+                        {product && editedGallery?.length != 0 && (
+                            <>
+                                {editedGallery.map((gallery, index) => (
+                                    <div className="relative w-fit" key={index}>
+                                        <span
+                                            onClick={(e) =>
+                                                removeGalleryImage(
+                                                    gallery.id,
+                                                    index
+                                                )
+                                            }
+                                            className="absolute size-[20px]  rounded-full text-center bg-gray-500 text-white cursor-pointer leading-[18px] hover:bg-gray-800 font-bold right-0"
+                                        >
+                                            <IoIosClose />
+                                        </span>
+                                        <img
+                                            src={`/${gallery.title}`}
+                                            alt=""
+                                            className="w-[80px] block"
+                                        />
+                                    </div>
+                                ))}
+                            </>
+                        )}
                     </div>
                 )}
 

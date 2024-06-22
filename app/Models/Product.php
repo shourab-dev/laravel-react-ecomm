@@ -27,4 +27,14 @@ class Product extends Model
     {
         return $this->hasMany(Gallery::class);
     }
+
+    function gallery()
+    {
+        return $this->hasOne(Gallery::class)->select('id','product_id','title')->latest();
+    }
+
+    function reviews()
+    {
+        return $this->hasMany(Rating::class)->where('approve', true);
+    }
 }

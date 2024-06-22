@@ -16,7 +16,7 @@ class ProductController extends Controller
 
     function viewAllProducts()
     {
-        $products = Product::paginate(20);
+        $products = Product::latest()->paginate(20);
         return inertia('Backend/Products/Products', [
             'products' => $products
         ]);
@@ -38,6 +38,7 @@ class ProductController extends Controller
     function storeProduct(Request $request, $id = null)
     {
 
+        
 
 
         //* VALIDATION
@@ -77,11 +78,11 @@ class ProductController extends Controller
 
         //* SET IF REQUEST HAS GALLERIES 
         if ($request->galleries) {
-            $oldGalleries = Gallery::where('product_id', $product->id)->get();
-            foreach ($oldGalleries as $oldGallery) {
-                $this->deleteMedia($oldGallery->title);
-                $oldGallery->delete();
-            }
+            // $oldGalleries = Gallery::where('product_id', $product->id)->get();
+            // foreach ($oldGalleries as $oldGallery) {
+            //     $this->deleteMedia($oldGallery->title);
+            //     $oldGallery->delete();
+            // }
             $uploadGalleries = $this->uploadMultiMedia($request->galleries, [], 'galleries');
             foreach ($uploadGalleries as $gallery) {
                 $productGallery = new Gallery();
@@ -101,6 +102,28 @@ class ProductController extends Controller
 
         return  to_route('admin.products.all');
     }
+
+
+    function updateFeaturedProducts($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->featured = !$product->featured;
+        $product->save();
+    }
+    function updateStatusProducts($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->status = !$product->status;
+        $product->save();
+    }
+
+    function deleteProduct($id) {
+        $product = Product::findOrFail($id)->delete();
+        
+
+    }
+
+
 
 
     function getCrossProducts($search = null)

@@ -9,10 +9,27 @@ import ProductLists from "@/Components/Products/ProductLists";
 import TestimonialSection from "@/Components/Testimonial/TestimonialSection";
 import TrustSection from "@/Components/TrustSection";
 import Frontend from "@/Layouts/Frontend";
-import { Link } from "@inertiajs/react";
-import React from "react";
+
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const Home = ({ categories }) => {
+    const [featuredProducts, setFeaturedProducts] = useState([]);
+    useEffect(() => {
+        axios
+            .get(route("getFeaturedProducts"), {
+                params: {
+                    limit: 4,
+                    avg_rating: 1,
+                    rating: 1,
+                    gallery: 1,
+                },
+            })
+            .then(({ data }) => {
+                setFeaturedProducts([...data]);
+            });
+    }, []);
+
     return (
         <>
             {/* * BANNER SECTION */}
@@ -60,7 +77,7 @@ const Home = ({ categories }) => {
                         url={route("shop", { featured: true })}
                     />
 
-                    <ProductLists products={[{}, {}, {}, {}]} />
+                    <ProductLists products={featuredProducts} />
                 </div>
             </section>
             {/* FEATURED CATEGORY */}
@@ -106,7 +123,6 @@ const Home = ({ categories }) => {
             <TestimonialSection />
             {/* BRAND SECTION */}
             <BrandSlider />
-            
         </>
     );
 };
