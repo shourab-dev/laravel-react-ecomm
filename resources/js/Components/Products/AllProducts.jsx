@@ -40,7 +40,7 @@ const AllProducts = ({ products, className }) => {
                                     </h4>
                                 </div>
                             </TableCell>
-                            <TableCell className='text-center'>
+                            <TableCell className="text-center">
                                 <span
                                     className={`${
                                         statusCheck[product.status].style
@@ -54,7 +54,22 @@ const AllProducts = ({ products, className }) => {
                                     <FaRegStar />
                                 </Link>
                             </TableCell>
-                            <TableCell>1</TableCell>
+                            <TableCell>
+                                <div className="grid lg:grid-cols-2">
+                                    <a
+                                        href=""
+                                        className=" text-white py-3 px-4 block text-center bg-primary"
+                                    >
+                                        Edit
+                                    </a>
+                                    <a
+                                        href=""
+                                        className=" text-white py-3 px-4 block text-center bg-red-500"
+                                    >
+                                        Delete
+                                    </a>
+                                </div>
+                            </TableCell>
                         </tr>
                     ))}
                 </tbody>
