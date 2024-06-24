@@ -21,7 +21,7 @@ Route::get('/contact-us', [HomeController::class, 'contactPage'])->name('contact
 //* GET ALL CATEGORY BASED PRODUCTS (ARCHEIVED PAGE)
 Route::get('/category/{slug}', [CategoryController::class, 'archeivePage'])->name('category.archeive');
 Route::get('/product/{slug}', [ProductController::class, 'singleProduct'])->name('product.view');
-
+Route::post('/add-review', [ProductController::class,'addReview'])->name('product.review.add');
 
 //* SEARCH PRODUCTS
 Route::get('/search/{title}', [ProductController::class, 'searchProducts'])->name('products.search');

@@ -4,8 +4,7 @@ const Accordion = ({ data = [] }) => {
     const [accordion, setAccordion] = useState(data[0]);
 
     const activeSingleAccordion = (item) => {
-        
-        if(item.id === accordion.id){
+        if (item.id === accordion.id) {
             setAccordion([]);
             return false;
         }
@@ -78,15 +77,7 @@ const Accordion = ({ data = [] }) => {
                                     : "p-0 opacity-0  h-0"
                             }`}
                         >
-                            Lorem, ipsum dolor sit amet consectetur adipisicing
-                            elit. Ea similique assumenda, ducimus laborum
-                            aliquid optio! Hic mollitia odio eos nostrum?
-                            Inventore labore, enim, amet similique laborum
-                            doloremque provident dignissimos aperiam perferendis
-                            commodi necessitatibus quaerat maxime? Possimus,
-                            non. Corrupti molestias cupiditate, architecto,
-                            asperiores quod eos dignissimos nemo necessitatibus
-                            deleniti nihil optio.
+                            {item.element}
                         </div>
                     </div>
                 ))}

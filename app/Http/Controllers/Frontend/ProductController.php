@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Traits\Trait\MediaUploader;
 use App\Http\Controllers\Controller;
+use App\Models\Rating;
 
 class ProductController extends Controller
 {
@@ -29,7 +30,9 @@ class ProductController extends Controller
 
     function singleProduct($slug)
     {
-        $product = Product::where([['slug', $slug], ['status', true]])->with(['galleries', 'reviews'])->first();
+        $product = Product::where([['slug', $slug], ['status', true]])->withCount('reviews as totalReviews')->with(['galleries'])->with(['reviews' => function ($q) {
+            $q->with('customer')->take(3);
+        }])->first();
         if (!$product) {
             return abort(404);
         }
@@ -76,5 +79,17 @@ class ProductController extends Controller
         $this->deleteMedia($gallery->title);
         $gallery->delete();
         return response('Gallery image has been removed', 200);
+    }
+
+
+    function addReview(Request $request)
+    {
+
+
+        $rating = new Rating();
+        $rating->stars = $request->rating;
+        $rating->customer_id = auth('customer')->id();
+        $rating->review = $request->review;
+        $rating->save();
     }
 }

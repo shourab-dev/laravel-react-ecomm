@@ -5,22 +5,31 @@ import { Link } from "@inertiajs/react";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import Detail from "@/Components/Products/Detail";
 import Accordion from "@/Components/Accordion";
+import Review from "@/Components/Products/Review";
 
 const SingleProduct = ({ auth, product }) => {
     const data = [
         {
             id: 1,
             title: "Detail",
-            element: <Detail />,
+            element: <Detail data={product.long_detail} />,
         },
         {
             id: 2,
             title: "Brand",
         },
+        {
+            id: 3,
+            title: "Reviews",
+            element: (
+                <Review
+                auth={auth.customer}
+                    reviews={product.reviews}
+                    totalReview={product.totalReviews}
+                />
+            ),
+        },
     ];
-    
-
-    
 
     return (
         <Frontend pageTitle={product.title}>
@@ -56,7 +65,7 @@ const SingleProduct = ({ auth, product }) => {
             </div>
 
             {/* ACCORDION */}
-          <Accordion data={data}/>
+            <Accordion data={data} />
             {/* ACCORDION END */}
         </Frontend>
     );
