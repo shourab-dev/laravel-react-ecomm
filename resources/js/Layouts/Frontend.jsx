@@ -10,6 +10,8 @@ import SocialMediaLists from "@/Components/SocialMediaLists";
 import VerticalMenu from "@/Components/VerticalMenu";
 import { myAccounts } from "@/utils/NavBarLinks";
 import { setUsers } from "@/store/slices/UserSlice";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Frontend = ({ children, pageTitle = "Ecommerce" }) => {
     const dispatch = useDispatch();
@@ -31,6 +33,7 @@ const Frontend = ({ children, pageTitle = "Ecommerce" }) => {
 
     return (
         <>
+            <ToastContainer />
             <Head title={pageTitle} />
 
             <Navbar />

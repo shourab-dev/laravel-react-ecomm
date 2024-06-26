@@ -11,6 +11,7 @@ import FeaturedTitle from "@/Components/FeaturedTitle";
 import axios from "axios";
 import CartCounter from "@/Components/Products/CartCounter";
 
+
 const SingleProduct = ({ auth, product }) => {
     const data = [
         {
@@ -37,8 +38,6 @@ const SingleProduct = ({ auth, product }) => {
     ];
 
     const [relatedProducts, setRelatedProducts] = useState([]);
-
-  
 
     useEffect(() => {
         axios.get(route("products.related", product.cross_sell)).then((res) => {
