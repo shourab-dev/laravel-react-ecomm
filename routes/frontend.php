@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\CartController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProductController;
@@ -21,7 +22,10 @@ Route::get('/contact-us', [HomeController::class, 'contactPage'])->name('contact
 //* GET ALL CATEGORY BASED PRODUCTS (ARCHEIVED PAGE)
 Route::get('/category/{slug}', [CategoryController::class, 'archeivePage'])->name('category.archeive');
 Route::get('/product/{slug}', [ProductController::class, 'singleProduct'])->name('product.view');
-Route::post('/add-review', [ProductController::class,'addReview'])->name('product.review.add');
+Route::post('/add-review/{id}', [ProductController::class, 'addReview'])->name('product.review.add');
+Route::controller(CartController::class)->prefix('/cart')->name('cart.')->middleware('customer')->group(function () {
+    Route::get('/{id}', 'addToCart')->name('add');
+});
 
 //* SEARCH PRODUCTS
 Route::get('/search/{title}', [ProductController::class, 'searchProducts'])->name('products.search');
@@ -52,5 +56,5 @@ Route::prefix('/profile')->name('profile.')->controller(ProfileController::class
 //* GET AUTH CUSTOMER
 Route::get('/get-auth-customer', [ProfileController::class, 'getAuthCustomer'])->name('auth.customer.get');
 
-
-
+//* GET RELATED PRODUCTS
+Route::get('/related-products/{ids?}', [ProductController::class, 'getRelatedProducts'])->name('products.related');

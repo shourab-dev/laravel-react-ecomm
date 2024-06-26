@@ -8,7 +8,7 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 const ProductCard = ({ product }) => {
     return (
         <div className="border rounded group">
-            {console.log(product)}
+            
             <div className="productImage relative lg:h-[350px]  overflow-hidden">
                 <Link href={route("product.view", product.slug ?? "un-known")}>
                     <img

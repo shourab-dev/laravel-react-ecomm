@@ -1,11 +1,15 @@
 import ProductThumbSlider from "@/Components/Products/ProductThumbSlider";
 import Frontend from "@/Layouts/Frontend";
-import React, { useState } from "react";
-import { Link } from "@inertiajs/react";
-import { MdOutlineShoppingCart } from "react-icons/md";
+import React, { useEffect, useState } from "react";
+
 import Detail from "@/Components/Products/Detail";
 import Accordion from "@/Components/Accordion";
 import Review from "@/Components/Products/Review";
+import ProductLists from "@/Components/Products/ProductLists";
+
+import FeaturedTitle from "@/Components/FeaturedTitle";
+import axios from "axios";
+import CartCounter from "@/Components/Products/CartCounter";
 
 const SingleProduct = ({ auth, product }) => {
     const data = [
@@ -23,7 +27,8 @@ const SingleProduct = ({ auth, product }) => {
             title: "Reviews",
             element: (
                 <Review
-                auth={auth.customer}
+                    auth={auth.customer}
+                    id={product.id}
                     reviews={product.reviews}
                     totalReview={product.totalReviews}
                 />
@@ -31,10 +36,19 @@ const SingleProduct = ({ auth, product }) => {
         },
     ];
 
+    const [relatedProducts, setRelatedProducts] = useState([]);
+
+  
+
+    useEffect(() => {
+        axios.get(route("products.related", product.cross_sell)).then((res) => {
+            setRelatedProducts(res.data);
+        });
+    }, []);
+
     return (
         <Frontend pageTitle={product.title}>
             <div className="my-[20px] lg:my-[80px] container">
-                {console.log(product)}
                 <div className="grid lg:grid-cols-8 gap-8">
                     <div className="overflow-hidden lg:col-span-4">
                         <ProductThumbSlider product={product} />
@@ -54,12 +68,7 @@ const SingleProduct = ({ auth, product }) => {
                             )}
                         </p>
                         <p>{product.short_detail}</p>
-                        <Link className="btn my-3 py-4 px-6" href="#">
-                            <span className="me-2 text-xl">
-                                <MdOutlineShoppingCart />
-                            </span>
-                            Add to Cart
-                        </Link>
+                        <CartCounter product={product.id} className="my-2" />
                     </div>
                 </div>
             </div>
@@ -67,6 +76,15 @@ const SingleProduct = ({ auth, product }) => {
             {/* ACCORDION */}
             <Accordion data={data} />
             {/* ACCORDION END */}
+
+            {/* * RELATED PRODUCTS */}
+            {relatedProducts.length > 0 && (
+                <div className="container mb-10">
+                    <FeaturedTitle title="Related Products" />
+                    <ProductLists products={relatedProducts} />
+                </div>
+            )}
+            {/* * RELATED PRODUCTS  END*/}
         </Frontend>
     );
 };

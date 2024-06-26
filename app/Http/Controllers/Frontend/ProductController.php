@@ -82,14 +82,24 @@ class ProductController extends Controller
     }
 
 
-    function addReview(Request $request)
+    function addReview(Request $request, $id)
     {
-
+        
 
         $rating = new Rating();
         $rating->stars = $request->rating;
         $rating->customer_id = auth('customer')->id();
+        $rating->product_id = $id;
         $rating->review = $request->review;
         $rating->save();
+    }
+
+
+
+    function getRelatedProducts($ids = null) {
+        
+        $relatedProducts = Product::select('id', 'title', 'price', 'sell_price', 'slug', 'status', 'featured', 'featured_img')->whereIn('id', collect(json_decode($ids))->pluck('value'))->get();
+        return response()->json($relatedProducts);
+
     }
 }

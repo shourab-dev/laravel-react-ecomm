@@ -38,4 +38,11 @@ class Customer extends Authenticatable
     {
         return $this->hasMany(Rating::class);
     }
+
+
+
+    function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
 }

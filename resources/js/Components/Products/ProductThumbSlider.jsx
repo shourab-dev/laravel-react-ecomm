@@ -25,7 +25,7 @@ const ProductThumbSlider = ({ product }) => {
 
     return (
         <>
-           
+            {console.log(product)}
             <Swiper
                 style={{
                     "--swiper-navigation-color": "#fff",
@@ -40,7 +40,14 @@ const ProductThumbSlider = ({ product }) => {
             >
                 {images.map((gall) => (
                     <SwiperSlide key={gall.id}>
-                        <img src={`/${gall.title}`} className="w-full block" />
+                        <img
+                            src={
+                                gall.title
+                                    ? `/${gall.title}`
+                                    : "/frontend/images/placeholder.webp"
+                            }
+                            className="w-full block"
+                        />
                     </SwiperSlide>
                 ))}
             </Swiper>
@@ -57,7 +64,11 @@ const ProductThumbSlider = ({ product }) => {
                     {images.map((thumb, index) => (
                         <SwiperSlide key={thumb.id}>
                             <img
-                                src={`/${thumb.title}`}
+                                src={
+                                    thumb.title
+                                        ? `/${thumb.title}`
+                                        : "/frontend/images/placeholder.webp"
+                                }
                                 className="h-full w-full rounded-lg"
                             />
                         </SwiperSlide>

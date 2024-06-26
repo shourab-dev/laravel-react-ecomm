@@ -3,9 +3,9 @@ import { RiStarSFill } from "react-icons/ri";
 import { Rating } from "react-simple-star-rating";
 import AddReview from "./AddReview";
 import { Link } from "@inertiajs/react";
-const Review = ({ auth, reviews, totalReview }) => {
+const Review = ({ auth, reviews, id, totalReview }) => {
     return (
-        <div className="grid lg:grid-cols-2 gap-4">
+        <div className="grid lg:grid-cols-2 gap-4 ">
             <div className="reviews">
                 <h4 className="font-bold flex items-center mb-5">
                     Total Reviews ({totalReview}
@@ -17,7 +17,7 @@ const Review = ({ auth, reviews, totalReview }) => {
                         className="reviewCard border  border-gray-200 my-2"
                         key={review.id}
                     >
-                        <div className="grid grid-cols-6 p-4 gap-4">
+                        <div className="grid grid-cols-6 p-4 gap-4 ">
                             <div className="col-span-1 ">
                                 <img
                                     className="rounded-full w-full mx-auto "
@@ -47,7 +47,16 @@ const Review = ({ auth, reviews, totalReview }) => {
                     </div>
                 ))}
             </div>
-            <div className="addReviews">{auth ? <AddReview /> : <Link href="" className="btn">Login</Link>}</div>
+
+            <div className={`addReviews ${!auth && "text-center"}`}>
+                {auth ? (
+                    <AddReview id={id} />
+                ) : (
+                    <Link href={route("signin.show")} className="btn mt-5">
+                        Login
+                    </Link>
+                )}
+            </div>
         </div>
     );
 };
