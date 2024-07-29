@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->integer('stock');
-            $table->float('price');
+            $table->float('cost');
             $table->timestamps();
         });
     }
@@ -28,7 +28,3 @@ return new class extends Migration
         Schema::dropIfExists('stocks');
     }
 };
-
-
-
-

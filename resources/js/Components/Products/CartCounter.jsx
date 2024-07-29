@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "@inertiajs/react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 const CartCounter = ({ product, defaulValue = 1, className }) => {
     const increment = () => {
@@ -28,13 +29,23 @@ const CartCounter = ({ product, defaulValue = 1, className }) => {
 
     const addToCart = (e) => {
         e.preventDefault();
-        get(route("cart.add", product), {
-            
-            onSuccess: () => {
-                setData("qty", 1);
-            },
-        });
-        toast("Wow so easy!");
+
+        axios
+            .get(route("cart.add", product), {
+                params: {
+                    qty: data.qty,
+                },
+            })
+            .then((res) => setData('qty', 1))
+            .catch((err) => console.log(err));
+
+        // get(route("cart.add", product), {
+
+        //     onSuccess: () => {
+        //         setData("qty", 1);
+        //     },
+        // });
+        toast("This product has been added!");
     };
 
     return (

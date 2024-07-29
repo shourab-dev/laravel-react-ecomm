@@ -11,7 +11,6 @@ import FeaturedTitle from "@/Components/FeaturedTitle";
 import axios from "axios";
 import CartCounter from "@/Components/Products/CartCounter";
 
-
 const SingleProduct = ({ auth, product }) => {
     const data = [
         {
@@ -67,7 +66,15 @@ const SingleProduct = ({ auth, product }) => {
                             )}
                         </p>
                         <p>{product.short_detail}</p>
-                        <CartCounter product={product.id} className="my-2" />
+                        {auth.customer &&
+                            (product.stock || product.inventory?.stock > 0) && (
+                                <CartCounter
+                                    product={product.id}
+                                    className="my-2"
+                                />
+                            )}
+                        {product.inventory?.stock}
+                        {console.log(product)}
                     </div>
                 </div>
             </div>

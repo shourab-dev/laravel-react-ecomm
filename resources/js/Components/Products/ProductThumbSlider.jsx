@@ -25,7 +25,7 @@ const ProductThumbSlider = ({ product }) => {
 
     return (
         <>
-            {console.log(product)}
+            
             <Swiper
                 style={{
                     "--swiper-navigation-color": "#fff",

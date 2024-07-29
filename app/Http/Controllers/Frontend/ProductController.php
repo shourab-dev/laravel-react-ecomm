@@ -30,12 +30,15 @@ class ProductController extends Controller
 
     function singleProduct($slug)
     {
-        $product = Product::where([['slug', $slug], ['status', true]])->withCount('reviews as totalReviews')->with(['galleries'])->with(['reviews' => function ($q) {
+        $product = Product::where([['slug', $slug], ['status', true]])->withCount('reviews as totalReviews')->with(['galleries'])
+        ->with('inventory')
+        ->with(['reviews' => function ($q) {
             $q->with('customer')->take(3);
         }])->first();
         if (!$product) {
             return abort(404);
         }
+        // dd($product);
         return inertia('Frontend/SingleProduct', [
             'product' => $product
         ]);

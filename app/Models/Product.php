@@ -30,11 +30,15 @@ class Product extends Model
 
     function gallery()
     {
-        return $this->hasOne(Gallery::class)->select('id','product_id','title')->latest();
+        return $this->hasOne(Gallery::class)->select('id', 'product_id', 'title')->latest();
     }
 
     function reviews()
     {
         return $this->hasMany(Rating::class)->where('approve', true);
+    }
+    function inventory()
+    {
+        return $this->hasOne(Stock::class,'product_id');
     }
 }
