@@ -58,3 +58,4 @@ Route::get('/get-auth-customer', [ProfileController::class, 'getAuthCustomer'])-
 
 //* GET RELATED PRODUCTS
 Route::get('/related-products/{ids?}', [ProductController::class, 'getRelatedProducts'])->name('products.related');
+Route::get('/get-cart', [CartController::class, 'getCartItems'])->middleware('customer')->name('cart.get');

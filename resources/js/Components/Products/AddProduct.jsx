@@ -91,7 +91,7 @@ const AddProduct = ({
                     </InputLabel>
                 </div>
                 <div
-                    className={`grid grid-cols-2 gap-3 my-3 ${
+                    className={`grid grid-cols-3 gap-3 my-3 ${
                         manageStock ? "block" : "hidden"
                     }`}
                 >
@@ -109,6 +109,15 @@ const AddProduct = ({
                         defaultValue={data.sku}
                         placeholder="Product SKU"
                     />
+                    <div>
+                        <TextInput
+                            className="w-full"
+                            onChange={(e) => setData("cost", e.target.value)}
+                            defaultValue={data.cost}
+                            placeholder="Product Purchase Cost"
+                        />
+                        <InputError message={errors.title} />
+                    </div>
                 </div>
             </div>
 
@@ -288,7 +297,7 @@ const AddProduct = ({
             </div>
 
             <PrimaryButton type="submit" className="py-4 w-full justify-center">
-                Add Product
+                {route().params.id ? "Edit" : "Add"} Product
             </PrimaryButton>
         </form>
     );

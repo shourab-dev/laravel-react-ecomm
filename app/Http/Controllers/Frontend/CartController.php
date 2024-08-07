@@ -8,11 +8,11 @@ use App\Http\Controllers\Controller;
 
 class CartController extends Controller
 {
-  
+
     function addToCart(Request $request, $id)
     {
 
-        
+
 
         $isExists = Cart::where([['customer_id', auth('customer')->id()], ['product_id', $id]])->exists();
         if ($isExists) {
@@ -25,5 +25,13 @@ class CartController extends Controller
             $cart->qty = $request->qty;
             $cart->save();
         }
+    }
+
+
+    function getCartItems()
+    {
+        $id = auth('customer')->id();
+        $carts = Cart::with('product')->where('customer_id', $id)->get();
+        return response()->json($carts);
     }
 }

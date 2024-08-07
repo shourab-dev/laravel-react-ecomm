@@ -15,4 +15,10 @@ class Cart extends Model
         "qty",
         "total_price",
     ];
+
+
+    function product()
+    {
+        return $this->belongsTo(Product::class, "product_id");
+    }
 }

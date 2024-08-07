@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TopHeader from "./TopHeader";
 import { Link } from "@inertiajs/react";
 import { CiSearch, CiHeart } from "react-icons/ci";
-import { IoBagHandleOutline } from "react-icons/io5";
+
 import { RiMenu3Line } from "react-icons/ri";
 import SearchBar from "./SearchBar";
 import OffCanvas from "./OffCanvas";
@@ -10,17 +10,15 @@ import CartList from "./CartList";
 import BottomHeader from "./BottomHeader";
 import SmallMenu from "./SmallMenu";
 import { menus } from "@/utils/NavBarLinks";
-import axios from "axios";
 import { useSelector } from "react-redux";
+import NavbarCart from "./NavbarCart";
 
 const Navbar = () => {
     const [showCart, setShowCart] = useState(false);
     const [sidebar, setSidebar] = useState(false);
-    
+
     const [products, setProducts] = useState(null);
-    
-    const categories = useSelector(state=>state.categories)
-    
+    const categories = useSelector((state) => state.categories);
 
     return (
         <>
@@ -43,23 +41,7 @@ const Navbar = () => {
                             <Link href="">
                                 <CiHeart className="text-3xl hover:fill-primary " />
                             </Link>
-                            <button
-                                onClick={(e) => setShowCart(true)}
-                                className="flex items-center md:ms-4 mx-4"
-                            >
-                                <div className="relative">
-                                    <IoBagHandleOutline className="text-3xl" />
-                                    <span className="bg-primary text-white rounded-xl block text-center text-[12px] w-[18px] leading-[18px] h-[18px] absolute top-0 right-[-5px] ring-white ring-2">
-                                        2
-                                    </span>
-                                </div>
-                                <div className="ms-3 hidden md:block">
-                                    <p className="text-xs">Shopping Cart:</p>
-                                    <h4 className=" font-bold text-sm">
-                                        57.00 tk
-                                    </h4>
-                                </div>
-                            </button>
+                            <NavbarCart />
                             <button
                                 className="text-2xl md:hidden"
                                 onClick={(e) => setSidebar(!sidebar)}
@@ -80,6 +62,7 @@ const Navbar = () => {
             >
                 <CartList products={products} />
             </OffCanvas>
+
             <OffCanvas
                 width={400}
                 title="Menus"

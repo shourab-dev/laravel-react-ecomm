@@ -8,8 +8,6 @@ import "swiper/css/thumbs";
 import "./thumbSlider.css";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 
-
-
 const ProductThumbSlider = ({ product }) => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const [images, setImages] = useState(product.galleries);
@@ -25,7 +23,6 @@ const ProductThumbSlider = ({ product }) => {
 
     return (
         <>
-            
             <Swiper
                 style={{
                     "--swiper-navigation-color": "#fff",
@@ -41,6 +38,18 @@ const ProductThumbSlider = ({ product }) => {
                 {images.map((gall) => (
                     <SwiperSlide key={gall.id}>
                         <img
+                            onMouseMove={(e) => {
+                                const rect = e.target.getBoundingClientRect();
+                                const x = e.clientX - rect.left;
+                                const y = e.clientY - rect.top;
+                                e.target.style.transformOrigin = `${x}px ${y}px`;
+                            }}
+                            onMouseOver={(e) => {
+                                e.target.style.transform = `scale(1.5)`;
+                            }}
+                            onMouseOut={(e) => {
+                                e.target.style.transform = "scale(1)";
+                            }}
                             src={
                                 gall.title
                                     ? `/${gall.title}`
