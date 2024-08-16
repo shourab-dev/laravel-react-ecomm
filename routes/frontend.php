@@ -58,3 +58,7 @@ Route::get('/get-auth-customer', [ProfileController::class, 'getAuthCustomer'])-
 
 //* GET RELATED PRODUCTS
 Route::get('/related-products/{ids?}', [ProductController::class, 'getRelatedProducts'])->name('products.related');
+
+//* GET AUTH CART PRODUCTS COUNT
+Route::get('/cart-count', [ProductController::class, 'cartCount'])->name('auth.cart.count')->middleware('customer');
+Route::get('/cart-items', [ProductController::class, 'getCarts'])->name('auth.cart.items')->middleware('customer');

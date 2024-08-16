@@ -74,7 +74,7 @@ const SingleProduct = ({ auth, product }) => {
                                 />
                             )}
                         {product.inventory?.stock}
-                        {console.log(product)}
+                        
                     </div>
                 </div>
             </div>

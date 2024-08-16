@@ -3,12 +3,14 @@ import { useForm } from "@inertiajs/react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { incrementCartCount } from "@/store/slices/CartSlice";
 
 const CartCounter = ({ product, defaulValue = 1, className }) => {
     const increment = () => {
         setData("qty", data.qty + 1);
     };
-
+    const dispatch = useDispatch();
     const updateValue = (e) => {
         if (e.target.value > 0) {
             setData("qty", Number(e.target.value));
@@ -36,15 +38,12 @@ const CartCounter = ({ product, defaulValue = 1, className }) => {
                     qty: data.qty,
                 },
             })
-            .then((res) => setData('qty', 1))
+            .then((res) => {
+                setData("qty", 1);
+                dispatch(incrementCartCount(1))
+            })
             .catch((err) => console.log(err));
 
-        // get(route("cart.add", product), {
-
-        //     onSuccess: () => {
-        //         setData("qty", 1);
-        //     },
-        // });
         toast("This product has been added!");
     };
 

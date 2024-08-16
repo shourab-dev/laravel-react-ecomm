@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Cart;
+use App\Models\Rating;
 use App\Models\Gallery;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Traits\Trait\MediaUploader;
 use App\Http\Controllers\Controller;
-use App\Models\Rating;
 
 class ProductController extends Controller
 {
@@ -31,10 +32,10 @@ class ProductController extends Controller
     function singleProduct($slug)
     {
         $product = Product::where([['slug', $slug], ['status', true]])->withCount('reviews as totalReviews')->with(['galleries'])
-        ->with('inventory')
-        ->with(['reviews' => function ($q) {
-            $q->with('customer')->take(3);
-        }])->first();
+            ->with('inventory')
+            ->with(['reviews' => function ($q) {
+                $q->with('customer')->take(3);
+            }])->first();
         if (!$product) {
             return abort(404);
         }
@@ -87,7 +88,7 @@ class ProductController extends Controller
 
     function addReview(Request $request, $id)
     {
-        
+
 
         $rating = new Rating();
         $rating->stars = $request->rating;
@@ -99,10 +100,23 @@ class ProductController extends Controller
 
 
 
-    function getRelatedProducts($ids = null) {
-        
+    function getRelatedProducts($ids = null)
+    {
+
         $relatedProducts = Product::select('id', 'title', 'price', 'sell_price', 'slug', 'status', 'featured', 'featured_img')->whereIn('id', collect(json_decode($ids))->pluck('value'))->get();
         return response()->json($relatedProducts);
+    }
 
+
+    function cartCount()
+    {
+        $count = Cart::where('customer_id', auth('customer')->id())->count();
+        return response()->json($count);
+    }
+    function getCarts()
+    {
+        $carts = Cart::where('customer_id', auth('customer')->id())->select('product_id')->get()->pluck('product_id');
+        $products = Product::whereIn('id', $carts)->select('id','title')->get();
+        return response()->json($products);
     }
 }

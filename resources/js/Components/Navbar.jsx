@@ -11,20 +11,30 @@ import BottomHeader from "./BottomHeader";
 import SmallMenu from "./SmallMenu";
 import { menus } from "@/utils/NavBarLinks";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setCart } from "@/store/slices/CartSlice";
 
 const Navbar = () => {
     const [showCart, setShowCart] = useState(false);
     const [sidebar, setSidebar] = useState(false);
-    
+
     const [products, setProducts] = useState(null);
-    
-    const categories = useSelector(state=>state.categories)
-    
+
+    const categories = useSelector((state) => state.categories);
+
+    const dispatch = useDispatch();
+    const { total } = useSelector((state) => state.cart);
+
+    useEffect(() => {
+        axios.get(route(`auth.cart.count`)).then(({ data }) => {
+            dispatch(setCart(data));
+        });
+    }, []);
 
     return (
         <>
             <TopHeader />
+
             <nav className="shadow py-4">
                 <div className="container">
                     <div className="grid md:grid-cols-12 items-center">
@@ -35,6 +45,7 @@ const Navbar = () => {
                                 className="w-[150px] sm:w-[auto]"
                             />
                         </Link>
+
                         <div className="col-span-6 order-3 md:order-2 mt-5 md:mt-0">
                             <SearchBar />
                         </div>
@@ -50,7 +61,7 @@ const Navbar = () => {
                                 <div className="relative">
                                     <IoBagHandleOutline className="text-3xl" />
                                     <span className="bg-primary text-white rounded-xl block text-center text-[12px] w-[18px] leading-[18px] h-[18px] absolute top-0 right-[-5px] ring-white ring-2">
-                                        2
+                                        {total}
                                     </span>
                                 </div>
                                 <div className="ms-3 hidden md:block">
@@ -78,7 +89,7 @@ const Navbar = () => {
                 show={showCart}
                 onClose={(e) => setShowCart(!showCart)}
             >
-                <CartList products={products} />
+                <CartList />
             </OffCanvas>
             <OffCanvas
                 width={400}

@@ -1,16 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CartProduct from "./CartProduct";
 import { Link } from "@inertiajs/react";
 import { IoBagHandleOutline } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { setCarts } from "@/store/slices/CartSlice";
+const CartList = () => {
+    const { items } = useSelector((state) => state.cart);
+    const dispatch = useDispatch();
 
-const CartList = ({ products }) => {
+    useEffect(() => {
+        if (!items) {
+            axios
+                .get(route(`auth.cart.items`))
+                .then(({ data }) => {
+                    dispatch(setCarts(data));
+                })
+                .catch((err) => console.log(err));
+        }
+        console.log(items);
+
+    }, []);
     return (
         <div
             className="flex flex-col justify-between items-between"
             style={{ height: `calc(100vh - 58px)` }}
         >
             <div className=" overflow-auto">
-                {products?.map((product) => (
+                {items?.map((product) => (
                     <CartProduct product={product} />
                 ))}
             </div>
