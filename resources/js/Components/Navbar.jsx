@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TopHeader from "./TopHeader";
 import { Link } from "@inertiajs/react";
 import { CiSearch, CiHeart } from "react-icons/ci";
-import { IoBagHandleOutline } from "react-icons/io5";
+
 import { RiMenu3Line } from "react-icons/ri";
 import SearchBar from "./SearchBar";
 import OffCanvas from "./OffCanvas";
@@ -91,6 +91,7 @@ const Navbar = () => {
             >
                 <CartList />
             </OffCanvas>
+
             <OffCanvas
                 width={400}
                 title="Menus"

@@ -67,14 +67,26 @@ const SingleProduct = ({ auth, product }) => {
                         </p>
                         <p>{product.short_detail}</p>
                         {auth.customer &&
-                            (product.stock || product.inventory?.stock > 0) && (
-                                <CartCounter
-                                    product={product.id}
-                                    className="my-2"
-                                />
-                            )}
-                        {product.inventory?.stock}
-                        
+                        (product.stock || product.inventory?.stock > 0) ? (
+                            <CartCounter
+                                available={product?.stock}
+                                stock={product.inventory?.stock}
+                                product={product.id}
+                                className="my-2"
+                            />
+                        ) : (
+                            <p className="text-xl   my-3 text-red-500 border inline-block p-3 border-red-500">
+                                Out of Stock!
+                            </p>
+                        )}
+                        {product.inventory?.stock > 0 && (
+                            <p className="text-xl">
+                                <span className="text-orange-500 font-bold">
+                                    {product.inventory?.stock}
+                                </span>{" "}
+                                items left!
+                            </p>
+                        )}
                     </div>
                 </div>
             </div>

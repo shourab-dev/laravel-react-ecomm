@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Gallery;
 use App\Models\Product;
+use App\Models\Stock;
 use App\Traits\SlugGenerator;
 use App\Traits\Trait\MediaUploader;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class ProductController extends Controller
         $categories = Category::where('status', true)->select('title as label', 'id as value')->get();
         $editedProduct = null;
         if ($id) {
-            $editedProduct  = Product::with('galleries', 'categories:id as value,title as label')->findOrFail($id);
+            $editedProduct  = Product::with('galleries','inventory', 'categories:id as value,title as label')->findOrFail($id);
         }
         return inertia('Backend/Products/AddProducts', [
             'categories' => $categories,
@@ -38,13 +39,11 @@ class ProductController extends Controller
     function storeProduct(Request $request, $id = null)
     {
 
-        
-
-
         //* VALIDATION
         $request->validate([
             'title' => 'required|min:3',
             'price' => 'required',
+            "cost" => 'nullable|numeric',
             'sellPrice' =>
             function ($attribute, $value, $fail) use ($request) {
                 if ($request->has('price') && $value >= $request->input('price')) {
@@ -55,6 +54,7 @@ class ProductController extends Controller
             'galleries.*' => 'nullable|mimes:jpg,png,webp,jpeg',
         ]);
 
+        
         //* STORE OR UPDATE
         $slug = $this->generateSlug($request->title, Product::class);
 
@@ -62,6 +62,7 @@ class ProductController extends Controller
         $product =  Product::findOrNew($id);
         $product->title =  $request->title;
         $product->slug = $slug;
+        $product->sku = $request->sku;
         $product->short_detail = $request->shortDetail;
         $product->price = $request->price;
         $product->sell_price = $request->sellPrice;
@@ -75,6 +76,16 @@ class ProductController extends Controller
         $product->featured = $request->featured;
         $product->cross_sell = $request->crossProducts ? json_encode($request->crossProducts) : $product->cross_sell;
         $product->save();
+
+        $stock = Stock::updateOrCreate([
+            'product_id' => $product->id,
+        ], [
+            'stock'     => $request->initialStock,
+            'cost' => $request->cost ?? 0,
+        ]);
+        // $stock->product_id = $product->id;
+        // $stock->stock = $request->initialStock;
+        // $stock->cost = $request->cost ?? 0;
 
         //* SET IF REQUEST HAS GALLERIES 
         if ($request->galleries) {
@@ -117,10 +128,9 @@ class ProductController extends Controller
         $product->save();
     }
 
-    function deleteProduct($id) {
+    function deleteProduct($id)
+    {
         $product = Product::findOrFail($id)->delete();
-        
-
     }
 
 

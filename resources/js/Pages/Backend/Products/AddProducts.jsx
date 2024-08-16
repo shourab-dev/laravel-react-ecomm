@@ -1,5 +1,5 @@
 import AddProduct from "@/Components/Products/AddProduct";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import Title from "@/Components/Title";
@@ -13,9 +13,10 @@ const AddProducts = ({ auth, categories, product }) => {
         detail: product?.long_detail ?? "",
         price: product?.price ?? "",
         sellPrice: product?.sell_price ?? "",
-        initialStock: null,
-        sku: null,
-        featuredImage:  null,
+        initialStock: product.inventory?.stock || null,
+        sku: product.sku || null,
+        cost: product.inventory?.cost || null,
+        featuredImage: null,
         galleries: [],
         stock: product?.stock ?? true,
         featured: product?.featured ?? false,
@@ -39,6 +40,14 @@ const AddProducts = ({ auth, categories, product }) => {
             },
         });
     };
+
+    useEffect(()=>{
+        if(product.inventory){
+            setManageStock(true);
+        }
+    },[])
+
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -50,6 +59,7 @@ const AddProducts = ({ auth, categories, product }) => {
         >
             <Head title="Add Product" />
             <div className="py-12">
+                {console.log(product.inventory)}
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">

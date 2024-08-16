@@ -6,14 +6,30 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { incrementCartCount } from "@/store/slices/CartSlice";
 
-const CartCounter = ({ product, defaulValue = 1, className }) => {
+const CartCounter = ({
+    product,
+    defaulValue = 1,
+    className,
+    stock = null,
+    available = false,
+}) => {
     const increment = () => {
-        setData("qty", data.qty + 1);
+        if ((stock && stock > 0) || available) {
+            if (stock && stock < data.qty + 1) {
+                return false;
+            }
+            setData("qty", data.qty + 1);
+        }
     };
     const dispatch = useDispatch();
     const updateValue = (e) => {
         if (e.target.value > 0) {
-            setData("qty", Number(e.target.value));
+            if ((stock && stock > 0) || available) {
+                if (stock && stock < e.target.value) {
+                    return false;
+                }
+                setData("qty", Number(e.target.value));
+            }
         } else {
             setData("qty", 1);
         }
