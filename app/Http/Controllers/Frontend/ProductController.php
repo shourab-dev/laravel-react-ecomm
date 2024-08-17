@@ -116,7 +116,7 @@ class ProductController extends Controller
     function getCarts()
     {
         $carts = Cart::where('customer_id', auth('customer')->id())->select('product_id')->get()->pluck('product_id');
-        $products = Product::whereIn('id', $carts)->select('id','title')->get();
+        $products = Product::whereIn('id', $carts)->select('id','title','featured_img', 'price', 'sell_price')->get();
         return response()->json($products);
     }
 }

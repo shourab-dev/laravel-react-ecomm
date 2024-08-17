@@ -3,8 +3,8 @@ import { useForm } from "@inertiajs/react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { incrementCartCount } from "@/store/slices/CartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { incrementCartCount, updateCart } from "@/store/slices/CartSlice";
 
 const CartCounter = ({
     product,
@@ -22,6 +22,7 @@ const CartCounter = ({
         }
     };
     const dispatch = useDispatch();
+    const { items } = useSelector((state) => state.cart);
     const updateValue = (e) => {
         if (e.target.value > 0) {
             if ((stock && stock > 0) || available) {
@@ -49,18 +50,25 @@ const CartCounter = ({
         e.preventDefault();
 
         axios
-            .get(route("cart.add", product), {
+            .get(route("cart.add", product?.id), {
                 params: {
                     qty: data.qty,
                 },
             })
             .then((res) => {
                 setData("qty", 1);
-                dispatch(incrementCartCount(1))
+                dispatch(updateCart(product));
+                console.log(items);
+                
+                if (
+                    items?.filter((item) => item.id == product.id).length == 0 
+                ) {
+                    dispatch(incrementCartCount(1));
+                }
             })
             .catch((err) => console.log(err));
 
-        toast("This product has been added!");
+        // toast("This product has been added!");
     };
 
     return (

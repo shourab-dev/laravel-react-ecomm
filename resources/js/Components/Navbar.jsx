@@ -13,6 +13,7 @@ import { menus } from "@/utils/NavBarLinks";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setCart } from "@/store/slices/CartSlice";
+import { IoBagHandleOutline } from "react-icons/io5";
 
 const Navbar = () => {
     const [showCart, setShowCart] = useState(false);

@@ -71,7 +71,7 @@ const SingleProduct = ({ auth, product }) => {
                             <CartCounter
                                 available={product?.stock}
                                 stock={product.inventory?.stock}
-                                product={product.id}
+                                product={product}
                                 className="my-2"
                             />
                         ) : (
